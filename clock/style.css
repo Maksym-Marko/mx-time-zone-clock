@@ -1,0 +1,12 @@
+.mx-current-time {
+	text-align: center;
+	font-weight: bold;
+}
+.mx-time-zone {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
+.mx-localize-time {
+	text-align: center;
+}

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery canvasClock Plugin Demo</title>
+
+</head>
+
+<body>
+
+<div class="mx-localize-time-wrap">
+	
+	<div class="mx-localize-time">
+		
+		<div class='canvas-london' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+	<div class="mx-localize-time">
+		
+		<div class='canvas-berlin' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+	<div class="mx-localize-time">
+		
+		<div class='canvas-paris' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+	<div class="mx-localize-time">
+		
+		<div class='canvas-madrid' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+	<div class="mx-localize-time">
+		
+		<div class='canvas-kiev' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+	<div class="mx-localize-time">
+		
+		<div class='canvas-moscow' data-bg-img-url='clock-face3_2.png'></div>
+
+	</div>
+
+</div>
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="jquery.canvasClock.js"></script>
+
+<script type="text/javascript">
+
+	jQuery(document).ready(function(){
+
+		jQuery('.canvas-london').canvasClock({time_zone:'Europe/London'});
+
+		jQuery('.canvas-berlin').canvasClock({time_zone:'Europe/Berlin'});
+
+		jQuery('.canvas-paris').canvasClock({time_zone:'Europe/Paris'});
+
+		jQuery('.canvas-madrid').canvasClock({time_zone:'Europe/Madrid'});
+
+		jQuery('.canvas-kiev').canvasClock({time_zone:'Europe/Kiev'});
+
+		jQuery('.canvas-moscow').canvasClock({time_zone:'Europe/Moscow'});
+
+	});
+
+	// console.log( new Date( london_date ) );
+
+</script>
+
+</body>
+</html>
