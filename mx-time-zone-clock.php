@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: MX Time Zone Clock
-Plugin URI: https://github.com/Maxim-us/wp-plugin-skeleton
-Description: Clocks in different countries
+Plugin Name: MX Time Zone Clocks
+Plugin URI: https://github.com/Maxim-us/mx-time-zone-clock.git
+Description: Clocks for different time zones for your website.
 Author: Marko Maksym
 Version: 1.0
 Author URI: https://github.com/Maxim-us
