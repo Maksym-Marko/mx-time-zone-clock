@@ -18,7 +18,8 @@
       showMinuteHand: true,
       showHourHand: true,
       bgImgUrl: 'clock-face1.png',
-      time_zone: 'Europe/London'
+      time_zone: 'Europe/London',
+      city_name: ''
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -47,15 +48,17 @@
 
       var hours = theDate.getHours() + theDate.getMinutes() / 60;
 
+      var bias = ( parseInt( theDate.getMinutes() * 100 / 60 ) ) / 100;
+
       if( time_zone !== undefined) {
 
         hours = theDate.toLocaleString([], {timeZone: time_zone, hour: '2-digit' });
 
-      }
+        bias = ( parseInt( theDate.toLocaleString([], { timeZone: time_zone, minute: '2-digit' } ) * 100 / 60 ) ) / 100;;
 
-      // console.log( hours );
+      }
       
-      var degrees = (hours * 360 / 12) % 360;
+      var degrees = ( ( parseInt( hours ) + bias ) * 360 / 12) % 360;
 
       context.save();
       context.fillStyle = 'black';
@@ -131,21 +134,27 @@
 
     }
 
-    var show_time_zone = function( _this, time_zone ) {
+    var show_time_zone = function( _this, time_zone, city_name ) {
 
-      $( _this ).find( '.mx-time-zone' ).remove();
+		$( _this ).find( '.mx-time-zone' ).remove();
 
-      var element_date = $( '<div class="mx-time-zone" />' );
+		var element_date = $( '<div class="mx-time-zone" />' );
 
-      var regex = /.*\/(.*)/gi;
-      
-      var match = regex.exec(time_zone);
+		var regex = /.*\/(.*)/gi;
 
-      var time_zone_name = String( match[1] ).replace('_', ' ');
+		var match = regex.exec(time_zone);
 
-      element_date.text( time_zone_name );    
+		var time_zone_name = String( match[1] ).replace('_', ' ');
 
-      return element_date;
+		if( city_name !== '' ) {
+
+			time_zone_name = city_name;
+
+		}		
+
+		element_date.text( time_zone_name );    
+
+		return element_date;
 
     }
 
@@ -187,7 +196,7 @@
 
           _this.append(show_time(_this, canvasClock.time_zone));
 
-          _this.append(show_time_zone(_this, canvasClock.time_zone));
+          _this.append(show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
 
         }, 1000);
       }

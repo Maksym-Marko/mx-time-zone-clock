@@ -15,7 +15,7 @@ function mxtzc_enqueue() {
 
 	wp_enqueue_style( 'mxtzc_style', plugins_url( '/', __FILE__ ) . 'clock/style.css', array(), '25.04.19', 'all' );
 
-	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '25.04.19_2', false );
+	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '26.04.19', false );
 
 }
 
@@ -23,6 +23,8 @@ function mxtzc_enqueue() {
 add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 
 	$time_zone = $atts['time_zone'];
+
+	$city_name = $atts['city_name'];
 
 	$clean_str = str_replace( '/', '-', $time_zone );
 
@@ -40,7 +42,10 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 
 			jQuery(document).ready(function(){
 
-				jQuery(".<?php echo $class_of_clock; ?>").canvasClock({time_zone:"<?php echo $time_zone; ?>"});
+				jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
+					time_zone: "<?php echo $time_zone; ?>",
+					city_name: "<?php echo $city_name; ?>"
+				});
 
 			} );
 
