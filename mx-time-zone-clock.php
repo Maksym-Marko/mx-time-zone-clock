@@ -26,11 +26,11 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 
 	$city_name = $atts['city_name'];
 
-	$data_format = $atts['data_format'];
+	$date_format = $atts['date_format'];
 
-	if( $data_format == 12 ) {
+	if( $date_format == 12 ) {
 
-		$data_format = 12;
+		$date_format = 12;
 
 	}
 
@@ -57,7 +57,7 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 				jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
 					time_zone: "<?php echo $time_zone; ?>",
 					city_name: "<?php echo $city_name; ?>",
-					data_format: "<?php echo $data_format; ?>",
+					date_format: "<?php echo $date_format; ?>",
 					digital_clock: "<?php echo $digital_clock; ?>"
 				});
 

@@ -20,7 +20,7 @@
       bgImgUrl: 'clock-face1.png',
       time_zone: 'Europe/London',
       city_name: '',
-      data_format: 24,
+      date_format: 24,
       digital_clock: false
     }, options );
 
@@ -122,7 +122,7 @@
       context.strokeText(brandName, 0 - brandNameSize.width / 2, -20);
     }
 
-    var show_time = function( _this, time_zone, data_format ) {
+    var show_time = function( _this, time_zone, date_format ) {
 
       $( _this ).find( '.mx-current-time' ).remove();
 
@@ -132,7 +132,7 @@
 
       element_date.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
-      if( parseInt( data_format ) === 12 ) {
+      if( parseInt( date_format ) === 12 ) {
 
         element_date.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
@@ -172,7 +172,7 @@
 
     }
 
-    var create_digital_clock = function( _this, time_zone, data_format, city_name ) {
+    var create_digital_clock = function( _this, time_zone, date_format, city_name ) {
 
       var date = new Date();
 
@@ -198,7 +198,7 @@
 
       element_time.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
-      if( parseInt( data_format ) === 12 ) {
+      if( parseInt( date_format ) === 12 ) {
 
         element_time.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
@@ -297,7 +297,7 @@
             if(canvasClock.showSecondHand)
               drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone);
 
-            _this.append(show_time(_this, canvasClock.time_zone, canvasClock.data_format));
+            _this.append(show_time(_this, canvasClock.time_zone, canvasClock.date_format));
 
             _this.append(show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
 
@@ -311,7 +311,7 @@
 
         window.setInterval( function() {
 
-          create_digital_clock( _this, canvasClock.time_zone, canvasClock.data_format, canvasClock.city_name );
+          create_digital_clock( _this, canvasClock.time_zone, canvasClock.date_format, canvasClock.city_name );
 
         },1000 );
 
