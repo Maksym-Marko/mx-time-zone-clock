@@ -19,7 +19,9 @@
       showHourHand: true,
       bgImgUrl: 'clock-face1.png',
       time_zone: 'Europe/London',
-      city_name: ''
+      city_name: '',
+      data_format: 24,
+      digital_clock: false
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -50,7 +52,7 @@
 
       var bias = ( parseInt( theDate.getMinutes() * 100 / 60 ) ) / 100;
 
-      if( time_zone !== undefined) {
+      if( time_zone !== undefined) {        
 
         hours = theDate.toLocaleString([], {timeZone: time_zone, hour: '2-digit' });
 
@@ -120,7 +122,7 @@
       context.strokeText(brandName, 0 - brandNameSize.width / 2, -20);
     }
 
-    var show_time = function( _this, time_zone ) {
+    var show_time = function( _this, time_zone, data_format ) {
 
       $( _this ).find( '.mx-current-time' ).remove();
 
@@ -130,78 +132,192 @@
 
       element_date.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
+      if( parseInt( data_format ) === 12 ) {
+
+        element_date.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+
+      }
+
       return element_date;
+
+    }
+
+    var mx_first_setter_up = function( string ) {
+
+        return string.charAt(0).toUpperCase() + string.slice(1);
 
     }
 
     var show_time_zone = function( _this, time_zone, city_name ) {
 
-		$( _this ).find( '.mx-time-zone' ).remove();
+  		$( _this ).find( '.mx-time-zone' ).remove();
 
-		var element_date = $( '<div class="mx-time-zone" />' );
+  		var element_date = $( '<div class="mx-time-zone" />' );
 
-		var regex = /.*\/(.*)/gi;
+  		var regex = /.*\/(.*)/gi;
 
-		var match = regex.exec(time_zone);
+  		var match = regex.exec(time_zone);
 
-		var time_zone_name = String( match[1] ).replace('_', ' ');
+  		var time_zone_name = String( match[1] ).replace('_', ' ');
 
-		if( city_name !== '' ) {
+  		if( city_name !== '' ) {
 
-			time_zone_name = city_name;
+  			time_zone_name = city_name;
 
-		}		
+  		}		
 
-		element_date.text( time_zone_name );    
+  		element_date.text( time_zone_name );
 
-		return element_date;
+  		return element_date;
+
+    }
+
+    var create_digital_clock = function( _this, time_zone, data_format, city_name ) {
+
+      var date = new Date();
+
+      _this.empty();
+
+      var element_time_zone = $( '<div class="mx-elem-time_zone" />' );
+
+      var element_time = $( '<div class="mx-elem-time" />' );
+
+      var element_days = $( '<div class="mx-elem-days" />' );
+
+      // weekday
+      var weekday = date.toLocaleString([], {timeZone: time_zone, weekday: 'long' } );
+
+      // month
+      var month = date.toLocaleString([], {timeZone: time_zone, month: 'long' } );
+
+      // day
+      var day = date.toLocaleString([], {timeZone: time_zone, day: 'numeric' } );
+
+      // year
+      var year = date.toLocaleString([], {timeZone: time_zone, year: 'numeric' } );
+
+      element_time.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+
+      if( parseInt( data_format ) === 12 ) {
+
+        element_time.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+
+        // weekday
+        weekday = date.toLocaleString('en-US', {timeZone: time_zone, weekday: 'long' } );
+
+        // month
+        month = date.toLocaleString('en-US', {timeZone: time_zone, month: 'long' } );
+
+        // day
+        var day = date.toLocaleString('en-US', {timeZone: time_zone, day: 'numeric' } );
+
+        // year
+        var year = date.toLocaleString('en-US', {timeZone: time_zone, year: 'numeric' } );
+
+      }
+
+      // weeks
+      weekday = mx_first_setter_up( weekday );
+
+      month = mx_first_setter_up( month );
+      
+      element_days.text( weekday + ', ' + month + ' ' + day + ', ' + year );
+
+      // time zone
+      var regex = /.*\/(.*)/gi;
+
+      var match = regex.exec( time_zone );
+
+      var time_zone_name = String( match[1] ).replace('_', ' ');
+
+      if( city_name !== '' ) {
+
+        time_zone_name = city_name;
+
+      }   
+
+      element_time_zone.text( time_zone_name );
+
+      // time zone      
+      _this.append( element_time_zone );
+
+      // create clock
+      _this.append( element_time );
+
+      // create months\weekday\days
+      _this.append( element_days );
 
     }
 
     return this.each(function() {
 
       var _this = $(this);
+
       var canvasClock = $.extend($.extend({}, settings), $(this).data());
-      var clockImage = new Image();
 
-      clockImage.src = canvasClock.bgImgUrl;
+      if( Boolean( canvasClock.digital_clock ) ) {
 
-      canvasClock.canvas = $("<canvas />")[0];
-      clockImage.onload = function() {
-        canvasClock.canvas.setAttribute('width', clockImage.width);
-        canvasClock.canvas.setAttribute('height', clockImage.height);
-        canvasClock.context = canvasClock.canvas.getContext('2d');
-        canvasClock.context.translate(canvasClock.canvas.width/2, canvasClock.canvas.height/2);
+        canvasClock.digital_clock = true;
+
+      } else {
+
+        canvasClock.digital_clock = false;
+
+      }
+
+      // create canvas
+      if( canvasClock.digital_clock !== true ) {
+      
+        var clockImage = new Image();
+
+        clockImage.src = canvasClock.bgImgUrl;
+
+        canvasClock.canvas = $("<canvas />")[0];
+        clockImage.onload = function() {
+          canvasClock.canvas.setAttribute('width', clockImage.width);
+          canvasClock.canvas.setAttribute('height', clockImage.height);
+          canvasClock.context = canvasClock.canvas.getContext('2d');
+          canvasClock.context.translate(canvasClock.canvas.width/2, canvasClock.canvas.height/2);
+
+          window.setInterval( function() {
+            var theDate = new Date();
+          
+            canvasClock.context.clearRect(-canvasClock.canvas.width/2, -canvasClock.canvas.height/2, canvasClock.canvas.width, canvasClock.canvas.height);
+            addBackgroundImage(canvasClock.canvas, canvasClock.context, clockImage);
+
+            if(canvasClock.brandName)
+              writeBrandName(canvasClock.context, canvasClock.brandName);
+
+            if(canvasClock.showHourHand)
+              drawHourHand(canvasClock.context, theDate, canvasClock.time_zone);
+
+            if(canvasClock.showMinuteHand)
+              drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone);
+
+            if(canvasClock.showSecondHand)
+              drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone);
+
+            _this.append(show_time(_this, canvasClock.time_zone, canvasClock.data_format));
+
+            _this.append(show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
+
+          }, 1000);
+        }
+
+        $( _this ).append(canvasClock.canvas);
+        $( _this ).data().canvasClock = canvasClock;
+
+      } else {
 
         window.setInterval( function() {
-          var theDate = new Date();
 
-          // console.log( theDate );
+          create_digital_clock( _this, canvasClock.time_zone, canvasClock.data_format, canvasClock.city_name );
 
-          canvasClock.context.clearRect(-canvasClock.canvas.width/2, -canvasClock.canvas.height/2, canvasClock.canvas.width, canvasClock.canvas.height);
-          addBackgroundImage(canvasClock.canvas, canvasClock.context, clockImage);
+        },1000 );
 
-          if(canvasClock.brandName)
-            writeBrandName(canvasClock.context, canvasClock.brandName);
-
-          if(canvasClock.showHourHand)
-            drawHourHand(canvasClock.context, theDate, canvasClock.time_zone);
-
-          if(canvasClock.showMinuteHand)
-            drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone);
-
-          if(canvasClock.showSecondHand)
-            drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone);
-
-
-          _this.append(show_time(_this, canvasClock.time_zone));
-
-          _this.append(show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
-
-        }, 1000);
       }
-      $(this).append(canvasClock.canvas);
-      $(this).data().canvasClock = canvasClock;
+
+      
     });
   };
 }( jQuery ));

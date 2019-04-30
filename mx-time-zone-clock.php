@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: MX Time Zone Clocks
-Plugin URI: https://github.com/Maxim-us/mx-time-zone-clock.git
+Plugin URI: https://github.com/Maxim-us/mx-time-zone-clock
 Description: Clocks for different time zones for your website.
 Author: Marko Maksym
-Version: 1.0
+Version: 1.1
 Author URI: https://github.com/Maxim-us
 */
 
@@ -15,7 +15,7 @@ function mxtzc_enqueue() {
 
 	wp_enqueue_style( 'mxtzc_style', plugins_url( '/', __FILE__ ) . 'clock/style.css', array(), '25.04.19', 'all' );
 
-	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '26.04.19', false );
+	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '30.04.19', false );
 
 }
 
@@ -25,6 +25,18 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 	$time_zone = $atts['time_zone'];
 
 	$city_name = $atts['city_name'];
+
+	$data_format = $atts['data_format'];
+
+	if( $data_format == 12 ) {
+
+		$data_format = 12;
+
+	}
+
+	$digital_clock = $atts['digital_clock'];
+
+	// var_dump($digital_clock);
 
 	$clean_str = str_replace( '/', '-', $time_zone );
 
@@ -44,7 +56,9 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 
 				jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
 					time_zone: "<?php echo $time_zone; ?>",
-					city_name: "<?php echo $city_name; ?>"
+					city_name: "<?php echo $city_name; ?>",
+					data_format: "<?php echo $data_format; ?>",
+					digital_clock: "<?php echo $digital_clock; ?>"
 				});
 
 			} );
