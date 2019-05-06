@@ -15,7 +15,7 @@ function mxtzc_enqueue() {
 
 	wp_enqueue_style( 'mxtzc_style', plugins_url( '/', __FILE__ ) . 'clock/style.css', array(), '25.04.19', 'all' );
 
-	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '30.04.19', false );
+	wp_enqueue_script( 'mxtzc_script', plugins_url( '/', __FILE__ ) . 'clock/jquery.canvasClock.js', array( 'jquery' ), '06.05.19', false );
 
 }
 
@@ -36,17 +36,17 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 
 	$digital_clock = $atts['digital_clock'];
 
-	// var_dump($digital_clock);
+	$lang = $atts['lang'] == NULL ? 'en-US' : $atts['lang'];
 
 	$clean_str = str_replace( '/', '-', $time_zone );
 
-	$class_of_clock = 'mx-clock-' . strtolower( $clean_str );
+	$class_of_clock = 'mx-clock-' . strtolower( $clean_str ) . rand( 0, 1000 );
 
 	ob_start(); ?>
 
 		<div class="mx-localize-time">
 		
-			<div class='<?php echo $class_of_clock; ?>' data-bg-img-url='<?php echo plugins_url( '/', __FILE__ ); ?>clock/clock-face3_2.png'></div>
+			<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo plugins_url( '/', __FILE__ ); ?>clock/clock-face3_2.png'></div>
 
 		</div>
 
@@ -58,7 +58,8 @@ add_shortcode( 'mxtzc_time_zone_clock', function( $atts ) {
 					time_zone: "<?php echo $time_zone; ?>",
 					city_name: "<?php echo $city_name; ?>",
 					date_format: "<?php echo $date_format; ?>",
-					digital_clock: "<?php echo $digital_clock; ?>"
+					digital_clock: "<?php echo $digital_clock; ?>",
+					lang: "<?php echo $lang; ?>"
 				});
 
 			} );

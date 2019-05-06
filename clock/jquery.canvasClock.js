@@ -21,7 +21,8 @@
       time_zone: 'Europe/London',
       city_name: '',
       date_format: 24,
-      digital_clock: false
+      digital_clock: false,
+      lang: 'en-US'
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -172,7 +173,7 @@
 
     }
 
-    var create_digital_clock = function( _this, time_zone, date_format, city_name ) {
+    var create_digital_clock = function( _this, time_zone, date_format, city_name, lang ) {
 
       var date = new Date();
 
@@ -185,34 +186,34 @@
       var element_days = $( '<div class="mx-elem-days" />' );
 
       // weekday
-      var weekday = date.toLocaleString([], {timeZone: time_zone, weekday: 'long' } );
+      var weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
 
       // month
-      var month = date.toLocaleString([], {timeZone: time_zone, month: 'long' } );
+      var month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
 
       // day
-      var day = date.toLocaleString([], {timeZone: time_zone, day: 'numeric' } );
+      var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
 
       // year
-      var year = date.toLocaleString([], {timeZone: time_zone, year: 'numeric' } );
+      var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
 
-      element_time.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+      element_time.text( date.toLocaleString(lang, {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
       if( parseInt( date_format ) === 12 ) {
 
-        element_time.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+        element_time.text( date.toLocaleString(lang, {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
 
         // weekday
-        weekday = date.toLocaleString('en-US', {timeZone: time_zone, weekday: 'long' } );
+        weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
 
         // month
-        month = date.toLocaleString('en-US', {timeZone: time_zone, month: 'long' } );
+        month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
 
         // day
-        var day = date.toLocaleString('en-US', {timeZone: time_zone, day: 'numeric' } );
+        var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
 
         // year
-        var year = date.toLocaleString('en-US', {timeZone: time_zone, year: 'numeric' } );
+        var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
 
       }
 
@@ -311,7 +312,7 @@
 
         window.setInterval( function() {
 
-          create_digital_clock( _this, canvasClock.time_zone, canvasClock.date_format, canvasClock.city_name );
+          create_digital_clock( _this, canvasClock.time_zone, canvasClock.date_format, canvasClock.city_name, canvasClock.lang );
 
         },1000 );
 
