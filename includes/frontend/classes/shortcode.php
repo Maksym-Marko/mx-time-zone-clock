@@ -50,11 +50,18 @@ class MXMTZC_Shortcode
 
 			$class_of_clock = 'mx-clock-' . strtolower( $clean_str ) . rand( 0, 1000 );
 
+			// show days
+			if( $atts['show_days'] !== 'false' ) {
+
+				$show_days = $atts['show_days'];
+
+			}
+
 			ob_start(); ?>
 
 				<div class="mx-localize-time">
 				
-					<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/clock-face2.png'></div>
+					<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/<?php echo $atts['clock_type']; ?>'></div>
 
 				</div>
 
@@ -67,7 +74,8 @@ class MXMTZC_Shortcode
 							city_name: "<?php echo $city_name; ?>",
 							time_format: "<?php echo $time_format; ?>",
 							digital_clock: "<?php echo $digital_clock; ?>",
-							lang: "<?php echo $lang; ?>"
+							lang: "<?php echo $lang; ?>",
+							show_days: "<?php echo $show_days; ?>"
 						});
 
 					} );

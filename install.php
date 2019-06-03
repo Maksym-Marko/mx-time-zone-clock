@@ -38,7 +38,8 @@ class MXMTZC_Basis_Plugin_Class
 			'city_name' 	=> 'Wilton',
 			'time_format' 	=> '12',
 			'digital_clock' => 'false',
-			'lang'			=> 'en'
+			'lang'			=> 'en',
+			'show_days' 	=> 'true'
 
 		);
 

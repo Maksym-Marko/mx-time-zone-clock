@@ -66,8 +66,9 @@ class MXMTZC_Admin_Main
 
 		// main menu item
 		MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'index', '', [
-			'page_title' => 'MX Time Zone Clocks Settings',
-			'menu_title' => 'Time Zone Clocks'
+			'page_title' 	=> 'MX Time Zone Clocks Settings',
+			'menu_title' 	=> 'Time Zone Clocks',
+			'dashicons' 	=> 'dashicons-clock'
 		] );
 
 	}

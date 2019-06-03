@@ -41,7 +41,7 @@
 .mx-time-zone-shortcode {
     margin: 20px 0px;
 }
-.mx-time-zone-shortcode span:first-child {
+.mx-time-zone-shortcode > span:first-child {
     font-weight: bold;
 }
 .mx-time-zone-design-list {
@@ -69,6 +69,8 @@
     -webkit-box-shadow: 4px 0px 11px -5px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 0px 11px -5px rgba(0,0,0,0.75);
     box-shadow: 4px 0px 11px -5px rgba(0,0,0,0.75);
+    cursor: pointer;
+    display: none;
 }
 .mxmtzc_save_notice p {
     color: #86a6d6;
