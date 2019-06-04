@@ -115,12 +115,6 @@ jQuery( document ).ready( function( $ ) {
 
 } );
 
-
-
-
-
-
-
 // functions
 // show notification
 function mxmtzc_show_notification( $ ) {

@@ -24,7 +24,11 @@ class MXMTZC_Shortcode
 		add_action( 'wp_enqueue_scripts', array( $this, 'mxmtzc_enqueue' ) );
 
 		// register shortcode
-		add_shortcode( 'mxmtzc_time_zone_clocks', function( $atts ) {
+		add_shortcode( 'mxmtzc_time_zone_clocks', array( $this, 'mxmtzc_time_zone_clocks_function' ) );
+
+	}
+
+		public function mxmtzc_time_zone_clocks_function( $atts ) {
 			
 			$time_zone = $atts['time_zone'];
 
@@ -84,9 +88,7 @@ class MXMTZC_Shortcode
 
 			<?php return ob_get_clean();
 
-		} );
-
-	}
+		}
 
 		public function mxmtzc_enqueue()
 		{

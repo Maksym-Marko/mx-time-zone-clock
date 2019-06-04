@@ -53,9 +53,8 @@ class MXMTZC_Admin_Main
 	public function mxmtzc_registration_ajax_actions()
 	{
 
-		// ajax requests to main page
-		MXMTZC_Main_Page_Model::mxmtzc_wp_ajax();
-
+		// ajax requests
+		
 	}
 
 	/*
