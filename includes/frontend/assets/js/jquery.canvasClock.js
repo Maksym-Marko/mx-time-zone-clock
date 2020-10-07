@@ -23,7 +23,9 @@
       date_format: 24,
       digital_clock: false,
       lang: 'en-US',
-      show_days: false
+      lang_for_date: 'ua',
+      show_days: false,
+      arrow_type: 'classical'
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -48,7 +50,28 @@
       context.fill();
     };
 
-    var drawHourHand = function(context, theDate, time_zone){
+    var drawHandRect = function( context, size, thickness, shadowOffset ) {
+
+      var thickness = thickness || 2
+
+      context.shadowColor = '#555';
+      context.shadowBlur = 3;
+      context.shadowOffsetX = shadowOffset;
+      context.shadowOffsetY = shadowOffset;
+
+      context.beginPath();
+      // context.fillStyle = '#333';
+      context.moveTo(0,0); // center
+      context.lineTo(thickness *-1, -10);
+      context.lineTo(0, size * -1);
+      context.lineTo(thickness,-10);
+      context.lineTo(0,0);
+
+      context.fill();
+
+    }
+
+    var drawHourHand = function(context, theDate, time_zone, arrow_type){
 
       var hours = theDate.getHours() + theDate.getMinutes() / 60;
 
@@ -67,11 +90,21 @@
       context.save();
       context.fillStyle = 'black';
       context.rotate(degreesToRadians(degrees));
-      drawHand(context, 28, 4, 5);
+
+      if( arrow_type === 'modern' ) {
+
+        drawHandRect( context, 32, 2.2, 2 );
+
+      } else {
+
+        drawHand(context, 28, 4, 2);
+
+      }
+      
       context.restore();
     };
 
-    var drawMinuteHand = function(context, theDate, time_zone){
+    var drawMinuteHand = function(context, theDate, time_zone, arrow_type){
 
       var minutes = theDate.getMinutes() + theDate.getSeconds() / 60;
 
@@ -86,29 +119,68 @@
       context.save();
       context.fillStyle = 'black';
       context.rotate(degreesToRadians(minutes * 6));
-      drawHand(context, 42, 3, 3);
+
+      if( arrow_type === 'modern' ) {
+
+        drawHandRect( context, 42, 2, 2 );
+
+        circle_size = 3;
+
+      } else {
+
+        drawHand(context, 42, 3, 3);
+
+      }
+
       context.restore();
     };
 
-    var drawSecondHand = function(context, theDate, time_zone){
+    var drawSecondHand = function(context, theDate, time_zone, arrow_type){
       context.save();
-      context.fillStyle = 'red';
+      
+      var _fillStyle = 'red';
+
+      if( arrow_type === 'modern' ) {
+
+        _fillStyle = '#000'
+
+      }
+
+      context.fillStyle = _fillStyle;
       var seconds = theDate.getSeconds();
 
       if( time_zone !== undefined) {
 
-        seconds = theDate.toLocaleString([], {timeZone: time_zone, second: '2-digit' });
+        var clock_obj = {
+          timeZone: time_zone,
+          second: '2-digit'
+        }
+
+        seconds = theDate.toLocaleString( [], clock_obj );
 
       }
 
       // console.log( seconds );
 
       context.rotate( degreesToRadians(seconds * 6));
-      drawHand(context, 42, 2, 4);
+      
+      var circle_size = 5;
+
+      if( arrow_type === 'modern' ) {
+
+        drawHandRect( context, 47, 1, 2 );
+
+        circle_size = 5;
+
+      } else {
+
+        drawHand(context, 42, 2, 3);
+
+      }
 
       // Draw filled circle at the center
       context.moveTo(0,0); // center
-      context.arc(0,0,5,0,2*Math.PI);
+      context.arc(0,0,circle_size,0,2*Math.PI);
       context.fill();
 
       context.restore();
@@ -124,7 +196,7 @@
       context.strokeText(brandName, 0 - brandNameSize.width / 2, -20);
     };
 
-    var show_time = function( _this, time_zone, date_format ) {
+    var show_time = function( _this, time_zone, date_format, show_seconds ) {
 
       $( _this ).find( '.mx-current-time' ).remove();
 
@@ -132,11 +204,47 @@
 
       var date = new Date();
 
-      element_date.text( date.toLocaleString('uk', {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+      var clock_obj = {
+        timeZone: time_zone,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+
+      if( show_seconds === false ) {
+
+        clock_obj = {
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit'
+        };
+
+      }
+
+      element_date.text( date.toLocaleString('uk', clock_obj ) );
 
       if( parseInt( date_format ) === 12 ) {
 
-        element_date.text( date.toLocaleString('en-US', {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+        clock_obj = {
+          hour12: true,
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        };
+
+        if( show_seconds === false ) {
+
+          clock_obj = {
+            hour12: true,
+            timeZone: time_zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          };
+
+        }
+
+        element_date.text( date.toLocaleString( 'en-US', clock_obj ) );
 
       }
 
@@ -175,7 +283,7 @@
     };
 
     // show days
-    var mx_show_days = function( _this, time_zone, city_name, lang, date_format ) {
+    var mx_show_days = function( _this, time_zone, city_name, lang_for_date, date_format ) {
 
       var date = new Date();
 
@@ -184,32 +292,16 @@
       var element_days = $( '<div class="mx-elem-days" />' );
 
       // weekday
-      var weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
+      var weekday = date.toLocaleString(lang_for_date, {timeZone: time_zone, weekday: 'long' } );
 
       // month
-      var month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
+      var month = date.toLocaleString(lang_for_date, {timeZone: time_zone, month: 'long' } );
 
       // day
-      var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
+      var day = date.toLocaleString(lang_for_date, {timeZone: time_zone, day: 'numeric' } );
 
       // year
-      var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
-
-      if( parseInt( date_format ) === 12 ) {
-
-        // weekday
-        weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
-
-        // month
-        month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
-
-        // day
-        var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
-
-        // year
-        var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
-
-      }
+      var year = date.toLocaleString(lang_for_date, {timeZone: time_zone, year: 'numeric' } );
 
       // weeks
       weekday = mx_first_setter_up( weekday );
@@ -223,7 +315,7 @@
     };
 
     // create colck
-    var create_digital_clock = function( _this, time_zone, date_format, city_name, lang, show_days ) {
+    var create_digital_clock = function( _this, time_zone, date_format, city_name, lang, lang_for_date, show_days, show_seconds ) {
 
       var date = new Date();
 
@@ -236,37 +328,66 @@
       var element_days = $( '<div class="mx-elem-days" />' );
 
       // weekday
-      var weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
+      var weekday = date.toLocaleString(lang_for_date, {timeZone: time_zone, weekday: 'long' } );
 
       // month
-      var month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
+      var month = date.toLocaleString(lang_for_date, {timeZone: time_zone, month: 'long' } );
 
       // day
-      var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
+      var day = date.toLocaleString(lang_for_date, {timeZone: time_zone, day: 'numeric' } );
 
       // year
-      var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
+      var year = date.toLocaleString(lang_for_date, {timeZone: time_zone, year: 'numeric' } );
 
-      element_time.text( date.toLocaleString(lang, {timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+      var clock_obj = {};
 
-      if( parseInt( date_format ) === 12 ) {
+      if( parseInt( date_format ) === 24 ) {
 
-        element_time.text( date.toLocaleString(lang, {hour12: true, timeZone: time_zone, hour: '2-digit', minute: '2-digit', second: '2-digit' }) );
+        // show_seconds        
+        clock_obj = {
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }
 
-        // weekday
-        weekday = date.toLocaleString(lang, {timeZone: time_zone, weekday: 'long' } );
+        if( show_seconds === false) {
 
-        // month
-        month = date.toLocaleString(lang, {timeZone: time_zone, month: 'long' } );
+          clock_obj = {
+            timeZone: time_zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          }
+          
+        }
 
-        // day
-        var day = date.toLocaleString(lang, {timeZone: time_zone, day: 'numeric' } );
+        element_time.text( date.toLocaleString( 'uk', clock_obj ) );
 
-        // year
-        var year = date.toLocaleString(lang, {timeZone: time_zone, year: 'numeric' } );
+      } else {
+
+        clock_obj = {
+          hour12: true,
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        };
+
+        if( show_seconds === false) {
+
+          clock_obj = {
+            hour12: true,
+            timeZone: time_zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          };
+
+        }
+
+        element_time.text( date.toLocaleString( 'en', clock_obj ) );
 
       }
-
+     
       // weeks
       weekday = mx_first_setter_up( weekday );
 
@@ -344,22 +465,22 @@
               writeBrandName(canvasClock.context, canvasClock.brandName);
 
             if(canvasClock.showHourHand)
-              drawHourHand(canvasClock.context, theDate, canvasClock.time_zone);
+              drawHourHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
 
             if(canvasClock.showMinuteHand)
-              drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone);
+              drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
 
             if(canvasClock.showSecondHand)
-              drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone);
+              drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
 
-            _this.append(show_time(_this, canvasClock.time_zone, canvasClock.date_format));
+            _this.append(show_time(_this, canvasClock.time_zone, canvasClock.date_format, canvasClock.showSecondHand));
 
             _this.append(mx_show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
 
             // show days
             if( canvasClock.show_days === 'true' ) {
 
-              _this.append(mx_show_days(_this, canvasClock.time_zone, canvasClock.city_name, canvasClock.lang, canvasClock.date_format));
+              _this.append(mx_show_days(_this, canvasClock.time_zone, canvasClock.city_name, canvasClock.lang_for_date, canvasClock.date_format));
 
             }
            
@@ -373,7 +494,16 @@
 
         window.setInterval( function() {
 
-          create_digital_clock( _this, canvasClock.time_zone, canvasClock.date_format, canvasClock.city_name, canvasClock.lang, canvasClock.show_days );
+          create_digital_clock(
+            _this,
+            canvasClock.time_zone,
+            canvasClock.date_format,
+            canvasClock.city_name,
+            canvasClock.lang,
+            canvasClock.lang_for_date,
+            canvasClock.show_days,
+            canvasClock.showSecondHand // seconds arrow
+          );
 
         },1000 );
 

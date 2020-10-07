@@ -13,7 +13,7 @@ class MXMTZC_Main_Page_Model extends MXMTZC_Model
 	public function mxmtzc_get_time_zone_option()
 	{
 
-		$data = maybe_unserialize( get_option( 'mxmtzc_time_zone_default_options' ) );
+		$data = [];
 
 		return $data;
 

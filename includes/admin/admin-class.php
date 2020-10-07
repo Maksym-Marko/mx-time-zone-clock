@@ -30,6 +30,11 @@ class MXMTZC_Admin_Main
 
 		MXMTZC_Enqueue_Scripts::mxmtzc_register();
 
+		// options update
+		mxmtzc_require_class_file_admin( 'update-clock-optons.php' );
+
+			MXMTZC_Update_Clock_Optons::mx_update_options();
+
 	}
 
 	/*

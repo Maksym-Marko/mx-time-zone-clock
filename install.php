@@ -13,7 +13,7 @@ class MXMTZC_Basis_Plugin_Class
 	{
 
 		// set set default options
-		self::create_option_for_activation();
+		// self::create_option_for_activation();
 
 	}
 
@@ -31,21 +31,22 @@ class MXMTZC_Basis_Plugin_Class
 	public static function create_option_for_activation()
 	{
 
-		$array_of_default_options = array(
+		// $array_of_default_options = array(
 
-			'clock_type' 	=> 'clock-face2.png',
-			'time_zone' 	=> 'Australia/Sydney',
-			'city_name' 	=> 'Wilton',
-			'time_format' 	=> '12',
-			'digital_clock' => 'false',
-			'lang'			=> 'en',
-			'show_days' 	=> 'true'
+		// 	'clock_type' 		=> 'clock-face2.png',
+		// 	'time_zone' 		=> 'Australia/Sydney',
+		// 	'city_name' 		=> 'Wilton',
+		// 	'time_format' 		=> '12',
+		// 	'digital_clock' 	=> 'false',
+		// 	'lang'				=> 'en',
+		// 	'show_days' 		=> 'true',
+		// 	'clock_font_size' 	=> ''
 
-		);
+		// );
 
-		$time_zone_default_options = maybe_serialize( $array_of_default_options );
+		// $time_zone_default_options = maybe_serialize( $array_of_default_options );
 
-		add_option( 'mxmtzc_time_zone_default_options', $time_zone_default_options );
+		// add_option( 'mxmtzc_time_zone_default_options', $time_zone_default_options );
 
 	}
 

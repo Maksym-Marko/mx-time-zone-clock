@@ -50,6 +50,8 @@ class MXMTZC_Shortcode
 
 			$lang = $atts['lang'] == NULL ? 'en-US' : $atts['lang'];
 
+			$lang_for_date = $atts['lang_for_date'] == NULL ? 'en-US' : $atts['lang_for_date'];
+
 			$clean_str = str_replace( '/', '-', $time_zone );
 
 			$class_of_clock = 'mx-clock-' . strtolower( $clean_str ) . rand( 0, 1000 );
@@ -61,7 +63,42 @@ class MXMTZC_Shortcode
 
 			}
 
+			// font size
+			if( $atts['clock_font_size'] !== 'false' ) {
+
+				$clock_font_size = $atts['clock_font_size'];
+
+			}
+
+			// show seconds
+			if( $atts['show_seconds'] == 'false' ) {
+
+				$show_seconds = $atts['show_seconds'];
+
+			}
+
+			// arrow type
+			$arrow_type = 'classical';
+
+			if( isset( $atts['arrow_type'] ) ) {
+
+				$arrow_type = $atts['arrow_type'];
+
+			}
+
 			ob_start(); ?>
+
+				<?php if( !$clock_font_size == '' ) : ?>
+
+					<style>
+
+						.<?php echo $class_of_clock; ?> * {
+							font-size: <?php echo $clock_font_size . 'px';?>
+						}
+						
+					</style>
+
+				<?php endif; ?>
 
 				<div class="mx-localize-time">
 				
@@ -74,12 +111,16 @@ class MXMTZC_Shortcode
 					jQuery(document).ready(function(){
 
 						jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
-							time_zone: "<?php echo $time_zone; ?>",
-							city_name: "<?php echo $city_name; ?>",
-							time_format: "<?php echo $time_format; ?>",
-							digital_clock: "<?php echo $digital_clock; ?>",
-							lang: "<?php echo $lang; ?>",
-							show_days: "<?php echo $show_days; ?>"
+							time_zone: "<?php echo !isset( $time_zone ) ? '' : $time_zone; ?>",
+							city_name: "<?php echo !isset( $city_name ) ? '' : $city_name; ?>",
+							date_format: "<?php echo !isset( $time_format ) ? '' : $time_format; ?>",
+							digital_clock: "<?php echo !isset( $digital_clock ) ? '' : $digital_clock; ?>",
+							lang: "<?php echo !isset( $lang ) ? '' : $lang; ?>",
+							lang_for_date: "<?php echo !isset( $lang_for_date ) ? '' : $lang_for_date; ?>",
+							show_days: "<?php echo !isset( $show_days ) ? '' : $show_days; ?>",
+							showSecondHand: <?php echo !isset( $show_seconds ) ? 'true' : $show_seconds; ?>,
+							arrow_type: "<?php echo $arrow_type; ?>"
+
 						});
 
 					} );

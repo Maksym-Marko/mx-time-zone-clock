@@ -35,9 +35,7 @@
 
 		<?php
 
-			//var_dump( $data ); 
-
-			$array_of_clock_disign = array( 'clock-face1.png','clock-face2.png','clock-face4.png','clock-face5.png','clock-face6.png','clock-face7.png','clock-face8.jpg','clock-face9.jpg','clock-face10.png','clock-face11.png','clock-face12.png','clock-face13.jpg','clock-face14.jpg','clock-face15.jpg','clock-face17.jpg','clock-face18.png','clock-face19.png','clock-face20.jpg','clock-face21.png','clock-face22.jpg' );
+			$array_of_clock_disign = array( 'clock-face1.png','clock-face2.png','clock-face4.png','clock-face5.png','clock-face6.png','clock-face7.png','clock-face8.jpg','clock-face9.jpg','clock-face10.png','clock-face11.png','clock-face12.png','clock-face13.jpg','clock-face14.jpg','clock-face15.jpg','clock-face17.jpg','clock-face18.png','clock-face19.png','clock-face20.jpg','clock-face21.png','clock-face22.jpg','clock-face23.png','clock-face24.png','clock-face25.png' );
 
 		?>
 
@@ -138,7 +136,7 @@
 	<!-- language -->
 	<div class="mx-block_wrap">
 
-		<h3><?php echo __( 'Set the language attribute', 'mxmtzc-domain' ); ?></h3>
+		<h3><?php echo __( 'Set the language attribute to clock', 'mxmtzc-domain' ); ?></h3>
 
 		<p>
 			<?php echo __( 'Here you can find all attributes of the language:', 'mxmtzc-domain' ); ?>
@@ -155,19 +153,39 @@
 
 	</div>
 
+	<!-- language -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Set the language attribute to days', 'mxmtzc-domain' ); ?></h3>
+
+		<p>
+			<?php echo __( 'Here you can find all attributes of the language:', 'mxmtzc-domain' ); ?>
+			<a href="https://timezonedb.com/time-zones" target="_blank">timezonedb.com/</a>	
+		</p>
+
+		<p>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>en</b>
+		</p>
+
+		<p>
+			<input type="text" id="mxmtzc_language_for_days_attr" placeholder="<?php echo __( 'en', 'mxmtzc-domain' ); ?>" />
+		</p>
+
+	</div>
+
 	<!-- show days -->
 	<div class="mx-block_wrap">
 
 		<h3><?php echo __( 'Show day, month and year', 'mxmtzc-domain' ); ?></h3>
 
 		<p>
-			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>Show</b>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>Shown</b>
 		</p>
 
 		<p class="mxmtzc_show_days_wrap">
 			
 			<input type="radio" id="mxmtzc_show_days1" value="show" name="mxmtzc_show_days" checked="checked" />
-			<label for="mxmtzc_show_days1"><?php echo __( 'Show', 'mxmtzc-domain' ); ?></label>
+			<label for="mxmtzc_show_days1"><?php echo __( 'Shown', 'mxmtzc-domain' ); ?></label>
 
 		</p>
 
@@ -180,6 +198,71 @@
 
 	</div>
 
+	<!-- font size -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Set clock\'s font size' , 'mxmtzc-domain' ); ?></h3>
+
+		<p>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>Depends on your theme settings</b>
+		</p>
+
+		<p>
+			<input type="number" id="mxmtzc_font_size_attr" /> <span>px</span>
+		</p>
+
+	</div>
+
+	<!-- show seconds -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Show seconds in the clock', 'mxmtzc-domain' ); ?></h3>
+
+		<p>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>Shown</b>
+		</p>
+
+		<p class="mxmtzc_show_seconds_wrap">
+			
+			<input type="radio" id="mxmtzc_show_seconds1" value="show" name="mxmtzc_show_seconds" checked="checked" />
+			<label for="mxmtzc_show_seconds1"><?php echo __( 'Shown', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+		<p class="mxmtzc_show_seconds_wrap">
+			
+			<input type="radio" id="mxmtzc_show_seconds2" value="hidden" name="mxmtzc_show_seconds" />
+			<label for="mxmtzc_show_seconds2"><?php echo __( 'Hidden', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+	</div>
+
+	<!-- arrow type -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Type of arrows', 'mxmtzc-domain' ); ?></h3>
+
+		<p>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>Classical</b>
+		</p>
+
+		<p class="mxmtzc_show_days_wrap">
+			
+			<input type="radio" id="mxmtzc_arrow_type1" value="classical" name="mxmtzc_arrow_type" checked="checked" />
+			<label for="mxmtzc_arrow_type1"><?php echo __( 'Classical', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+		<p class="mxmtzc_show_days_wrap">
+			
+			<input type="radio" id="mxmtzc_arrow_type2" value="modern" name="mxmtzc_arrow_type" />
+			<label for="mxmtzc_arrow_type2"><?php echo __( 'Modern', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+	</div>	
+
 	<!-- shortcode -->
 	<div class="mx-block_wrap" id="mx_time_zone_shortcode">		
 
@@ -187,13 +270,17 @@
 
 			<span><?php echo __( 'Your shortcode:', 'mxmtzc-domain' ); ?></span>
 			<div class="mxmtzc_time_zone_shortcode_body">
-				[mxmtzc_time_zone_clocks time_zone="<span id="mxmtzc_time_zone_value"><?php echo $data['time_zone']; ?></span>"
-				city_name="<span id="mxmtzc_city_name_value"><?php echo $data['city_name']; ?></span>"
-				time_format="<span id="mxmtzc_time_format_value"><?php echo $data['time_format']; ?></span>"
-				digital_clock="<span id="mxmtzc_digital_clock_value"><?php echo $data['digital_clock']; ?></span>"
-				lang="<span id="mxmtzc_lang_value"><?php echo $data['lang']; ?></span>"
-				clock_type="<span id="mxmtzc_clock_type_value"><?php echo $data['clock_type']; ?></span>"
-				show_days="<span id="mxmtzc_show_days_value"><?php echo $data['show_days']; ?></span>"]
+				[mxmtzc_time_zone_clocks time_zone="<span id="mxmtzc_time_zone_value">Australia/Sydney</span>"
+				city_name="<span id="mxmtzc_city_name_value">Wilton</span>"
+				time_format="<span id="mxmtzc_time_format_value">12</span>"
+				digital_clock="<span id="mxmtzc_digital_clock_value">false</span>"
+				lang="<span id="mxmtzc_lang_value">en</span>"
+				lang_for_date="<span id="mxmtzc_language_for_days_attr_value">en</span>"
+				clock_type="<span id="mxmtzc_clock_type_value">clock-face2.png</span>"
+				show_days="<span id="mxmtzc_show_days_value">true</span>" clock_font_size="<span id="mxmtzc_font_size_attr_value"></span>" 
+				show_seconds="<span id="mxmtzc_show_seconds_value">true</span>"
+				arrow_type="<span id="mxmtzc_arrow_type_value">classical</span>"
+				]
 			</div>
 
 		</div>

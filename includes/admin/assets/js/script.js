@@ -94,6 +94,17 @@ jQuery( document ).ready( function( $ ) {
 
 	} );
 
+	// language attr for days
+	$( '#mxmtzc_language_for_days_attr' ).on( 'blur', function() {
+
+		var language_attr = $( this ).val();
+
+		$( '#mxmtzc_language_for_days_attr_value' ).text( language_attr );
+
+		mxmtzc_show_notification( $ );
+
+	} );	
+
 	// show days
 	$( '.mxmtzc_show_days_wrap' ).find( 'input' ).on( 'change', function() {
 
@@ -110,6 +121,47 @@ jQuery( document ).ready( function( $ ) {
 			mxmtzc_show_notification( $ );
 
 		}
+
+	} );
+
+	// font size
+	$( '#mxmtzc_font_size_attr' ).on( 'change', function() {
+
+		var font_size = $( this ).val();
+
+		$( '#mxmtzc_font_size_attr_value' ).text( font_size );
+
+		mxmtzc_show_notification( $ );
+
+	} );
+
+	// show seconds
+	$( '.mxmtzc_show_seconds_wrap' ).find( 'input' ).on( 'change', function() {
+
+		if( $( this ).val() === 'show'  ) {
+
+			$( '#mxmtzc_show_seconds_value' ).text( 'true' );
+
+			mxmtzc_show_notification( $ );
+
+		} else {
+
+			$( '#mxmtzc_show_seconds_value' ).text( 'false' );
+
+			mxmtzc_show_notification( $ );
+
+		}
+
+	} );
+
+	// arrow type
+	$( '[name="mxmtzc_arrow_type"]' ).on( 'change', function() {
+
+		var arrow_type = $( this ).val();
+
+		$( '#mxmtzc_arrow_type_value' ).text( arrow_type );
+
+		mxmtzc_show_notification( $ );
 
 	} );
 
