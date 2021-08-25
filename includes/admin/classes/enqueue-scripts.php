@@ -34,6 +34,10 @@ class MXMTZC_Enqueue_Scripts
 
 			wp_enqueue_script( 'mxmtzc_admin_script', MXMTZC_PLUGIN_URL . 'includes/admin/assets/js/script.js', array( 'jquery' ), MXMTZC_PLUGIN_VERSION, false );
 
+			wp_enqueue_media();
+			
+			wp_enqueue_script( 'mxmtzc_image-upload', MXMTZC_PLUGIN_URL . 'includes/admin/assets/js/image-upload.js', [ 'jquery' ], MXMTZC_PLUGIN_VERSION, false );
+
 		}
 
 }

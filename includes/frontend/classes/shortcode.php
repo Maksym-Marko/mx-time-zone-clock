@@ -30,70 +30,150 @@ class MXMTZC_Shortcode
 
 		public function mxmtzc_time_zone_clocks_function( $atts ) {
 			
-			$time_zone = $atts['time_zone'];
+			$time_zone = 'Europe/London';
 
-			$city_name = $atts['city_name'];
+			if( isset( $atts['time_zone'] ) ) {
 
-			$time_format = $atts['time_format'];
-
-			if( $time_format == 12 ) {
-
-				$time_format = 12;
+				$time_zone = esc_attr( $atts['time_zone'] );
 
 			}
 
-			if( $atts['digital_clock'] !== 'false' ) {
+			$city_name = '';
 
-				$digital_clock = $atts['digital_clock'];
+			if( isset( $atts['city_name'] ) ) {
 
-			}			
+				$city_name = esc_attr( $atts['city_name'] );
 
-			$lang = $atts['lang'] == NULL ? 'en-US' : $atts['lang'];
+			}
 
-			$lang_for_date = $atts['lang_for_date'] == NULL ? 'en-US' : $atts['lang_for_date'];
+			$time_format = 24;
+
+			if( isset( $atts['time_format'] ) ) {
+
+				if( $atts['time_format'] == 12 ) {
+
+					$time_format = 12;
+
+				}
+
+			}
+
+			$digital_clock = 'false';
+
+			if( isset( $atts['digital_clock'] ) ) {
+
+				if( $atts['digital_clock'] !== 'false' ) {
+
+					$digital_clock = 'true';
+
+				}	
+
+			}
+
+			$lang = 'en-US';
+
+			if( isset( $atts['lang'] ) ) {
+
+				$lang = esc_attr( $atts['lang'] );
+
+			}
+
+			$lang_for_date = 'en-US';
+
+			if( isset( $atts['lang_for_date'] ) ) {
+
+				$lang_for_date = esc_attr( $atts['lang_for_date'] );
+
+			}
 
 			$clean_str = str_replace( '/', '-', $time_zone );
 
 			$class_of_clock = 'mx-clock-' . strtolower( $clean_str ) . rand( 0, 1000 );
 
 			// show days
-			if( $atts['show_days'] !== 'false' ) {
+			$show_days = 'false';
 
-				$show_days = $atts['show_days'];
+			if( isset( $atts['show_days'] ) ) {
 
-			}
+				if( $atts['show_days'] !== 'false' ) {
+
+					$show_days = 'true';
+
+				}
+
+			}	
 
 			// font size
-			if( $atts['clock_font_size'] !== 'false' ) {
+			$clock_font_size = '';
 
-				$clock_font_size = $atts['clock_font_size'];
+			if( isset( $atts['clock_font_size'] ) ) {
 
-			}
+				$clock_font_size = esc_attr( $atts['clock_font_size'] );
+
+			}			
 
 			// show seconds
-			if( $atts['show_seconds'] == 'false' ) {
+			$show_seconds = 'true';
 
-				$show_seconds = $atts['show_seconds'];
+			if( isset( $atts['show_seconds'] ) ) {
 
-			}
+				if( $atts['show_seconds'] == 'false' ) {
+
+					$show_seconds = 'false';
+
+				}
+
+			}			
 
 			// arrow type
 			$arrow_type = 'classical';
 
 			if( isset( $atts['arrow_type'] ) ) {
 
-				$arrow_type = $atts['arrow_type'];
+				$arrow_type = esc_attr( $atts['arrow_type'] );
 
 			}
 
-			ob_start(); ?>
+			// super simple clock
+			$super_simple = 'false';
+
+			if( isset( $atts['super_simple'] ) ) {
+
+				if( $atts['super_simple'] == 'true' ) {
+
+					$super_simple = 'true';
+
+				}
+
+			}
+
+			$clock_type = 'clock-face2.png';
+
+			if( isset( $atts['clock_type'] ) ) {
+
+				$clock_type = esc_attr( $atts['clock_type'] );
+
+			}
+
+			// upload clock
+			$clock_upload = 'false';
+
+			if( isset( $atts['clock_upload'] ) ) {
+
+				$clock_upload = esc_attr( $atts['clock_upload'] );
+
+			}
+
+			ob_start(); 
+
+			?>
 
 				<?php if( !$clock_font_size == '' ) : ?>
 
 					<style>
 
 						.<?php echo $class_of_clock; ?> * {
-							font-size: <?php echo $clock_font_size . 'px';?>
+							font-size: <?php echo $clock_font_size . 'px !important';?>
 						}
 						
 					</style>
@@ -101,8 +181,16 @@ class MXMTZC_Shortcode
 				<?php endif; ?>
 
 				<div class="mx-localize-time">
+
+					<?php if( $clock_upload == 'false' ) : ?>
 				
-					<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/<?php echo $atts['clock_type']; ?>'></div>
+						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/<?php echo $clock_type; ?>'></div>
+
+					<?php else : ?>
+
+						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo $clock_upload; ?>'></div>
+
+					<?php endif; ?>
 
 				</div>
 
@@ -111,15 +199,16 @@ class MXMTZC_Shortcode
 					jQuery(document).ready(function(){
 
 						jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
-							time_zone: "<?php echo !isset( $time_zone ) ? '' : $time_zone; ?>",
-							city_name: "<?php echo !isset( $city_name ) ? '' : $city_name; ?>",
-							date_format: "<?php echo !isset( $time_format ) ? '' : $time_format; ?>",
-							digital_clock: "<?php echo !isset( $digital_clock ) ? '' : $digital_clock; ?>",
-							lang: "<?php echo !isset( $lang ) ? '' : $lang; ?>",
-							lang_for_date: "<?php echo !isset( $lang_for_date ) ? '' : $lang_for_date; ?>",
-							show_days: "<?php echo !isset( $show_days ) ? '' : $show_days; ?>",
-							showSecondHand: <?php echo !isset( $show_seconds ) ? 'true' : $show_seconds; ?>,
-							arrow_type: "<?php echo $arrow_type; ?>"
+							time_zone: "<?php echo $time_zone; ?>",
+							city_name: "<?php echo $city_name; ?>",
+							date_format: <?php echo $time_format; ?>,
+							digital_clock: <?php echo $digital_clock; ?>,
+							lang: "<?php echo $lang; ?>",
+							lang_for_date: "<?php echo $lang_for_date; ?>",
+							show_days: <?php echo $show_days; ?>,
+							showSecondHand: <?php echo $show_seconds; ?>,
+							arrow_type: "<?php echo $arrow_type; ?>",
+							super_simple: <?php echo $super_simple; ?>
 
 						});
 

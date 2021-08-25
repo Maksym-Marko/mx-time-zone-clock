@@ -17,4 +17,11 @@ class MXMTZC_Main_Page_Controller extends MXMTZC_Controller
 
 	}
 
+	public function hidemenu()
+	{
+
+		return new MXMTZC_View( 'additional-plugins' );
+
+	}
+
 }

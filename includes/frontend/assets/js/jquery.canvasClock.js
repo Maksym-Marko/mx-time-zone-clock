@@ -16,16 +16,17 @@
     var settings = $.extend({
       showSecondHand: true,
       showMinuteHand: true,
-      showHourHand: true,
-      bgImgUrl: 'clock-face1.png',
-      time_zone: 'Europe/London',
-      city_name: '',
-      date_format: 24,
-      digital_clock: false,
-      lang: 'en-US',
-      lang_for_date: 'ua',
-      show_days: false,
-      arrow_type: 'classical'
+      showHourHand:   true,
+      bgImgUrl:       'clock-face1.png',
+      time_zone:      'Europe/London',
+      city_name:      '',
+      date_format:    24,
+      digital_clock:  false,
+      lang:           'en-US',
+      lang_for_date:  'ua',
+      show_days:      false,
+      arrow_type:     'classical',
+      super_simple:   false
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -393,7 +394,118 @@
 
       month = mx_first_setter_up( month );
 
-      if( show_days === 'true' ) {
+      if( show_days === true ) {
+
+        element_days.text( weekday + ', ' + month + ' ' + day + ', ' + year );
+
+      }            
+
+      // time zone
+      var regex = /.*\/(.*)/gi;
+
+      var match = regex.exec( time_zone );
+
+      var time_zone_name = String( match[1] ).replace('_', ' ');
+
+      if( city_name !== '' ) {
+
+        time_zone_name = city_name;
+
+      }   
+
+      element_time_zone.text( time_zone_name );
+
+      // time zone      
+      _this.append( element_time_zone );
+
+      // create clock
+      _this.append( element_time );
+
+      // create months\weekday\days
+      _this.append( element_days );
+
+    };
+
+    // create colck
+    var create_super_simple_clock = function( _this, time_zone, date_format, city_name, lang, lang_for_date, show_days, show_seconds ) {
+
+      var date = new Date();
+
+      _this.empty();
+
+      var element_time_zone = $( '<span class="mx-simple-elem-time_zone" />' );
+
+      var element_time = $( '<span class="mx-simple-elem-time" />' );
+
+      var element_days = $( '<span class="mx-simple-elem-days" />' );
+
+      // weekday
+      var weekday = date.toLocaleString(lang_for_date, {timeZone: time_zone, weekday: 'long' } );
+
+      // month
+      var month = date.toLocaleString(lang_for_date, {timeZone: time_zone, month: 'long' } );
+
+      // day
+      var day = date.toLocaleString(lang_for_date, {timeZone: time_zone, day: 'numeric' } );
+
+      // year
+      var year = date.toLocaleString(lang_for_date, {timeZone: time_zone, year: 'numeric' } );
+
+      var clock_obj = {};
+
+      if( parseInt( date_format ) === 24 ) {
+
+        // show_seconds        
+        clock_obj = {
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }
+
+        if( show_seconds === false) {
+
+          clock_obj = {
+            timeZone: time_zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          }
+          
+        }
+
+        element_time.text( date.toLocaleString( 'uk', clock_obj ) );
+
+      } else {
+
+        clock_obj = {
+          hour12: true,
+          timeZone: time_zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        };
+
+        if( show_seconds === false) {
+
+          clock_obj = {
+            hour12: true,
+            timeZone: time_zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          };
+
+        }
+
+        element_time.text( date.toLocaleString( 'en', clock_obj ) );
+
+      }
+     
+      // weeks
+      weekday = mx_first_setter_up( weekday );
+
+      month = mx_first_setter_up( month );
+
+      if( show_days === true ) {
 
         element_days.text( weekday + ', ' + month + ' ' + day + ', ' + year );
 
@@ -442,7 +554,24 @@
       }
 
       // create canvas
-      if( canvasClock.digital_clock !== true ) {
+      if( canvasClock.super_simple === true ) {
+
+        window.setInterval( function() {
+
+          create_super_simple_clock(
+            _this,
+            canvasClock.time_zone,
+            canvasClock.date_format,
+            canvasClock.city_name,
+            canvasClock.lang,
+            canvasClock.lang_for_date,
+            canvasClock.show_days,
+            canvasClock.showSecondHand // seconds arrow
+          );
+
+        },1000 );
+
+      } else if( canvasClock.digital_clock !== true ) {
       
         var clockImage = new Image();
 
@@ -478,7 +607,7 @@
             _this.append(mx_show_time_zone(_this, canvasClock.time_zone, canvasClock.city_name));
 
             // show days
-            if( canvasClock.show_days === 'true' ) {
+            if( canvasClock.show_days === true ) {
 
               _this.append(mx_show_days(_this, canvasClock.time_zone, canvasClock.city_name, canvasClock.lang_for_date, canvasClock.date_format));
 
@@ -490,7 +619,8 @@
         $( _this ).append(canvasClock.canvas);
         $( _this ).data().canvasClock = canvasClock;
 
-      } else {
+      }
+      else {
 
         window.setInterval( function() {
 

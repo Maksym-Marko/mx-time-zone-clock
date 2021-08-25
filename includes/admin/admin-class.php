@@ -75,6 +75,12 @@ class MXMTZC_Admin_Main
 			'dashicons' 	=> 'dashicons-clock'
 		] );
 
+		// additional plugins
+		// hide menu item
+		MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'hidemenu', 'NULL', [
+			'page_title' => 'Additional plugins',
+		], 'mx_clocks_additional_plugins' );
+
 	}
 
 }

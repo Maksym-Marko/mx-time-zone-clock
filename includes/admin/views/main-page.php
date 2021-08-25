@@ -2,6 +2,31 @@
 	
 	<h1><?php echo __( 'Settings Page', 'mxmtzc-domain' ); ?></h1>
 
+		<nav class="mxmlb_admin_nav_bar">
+		
+		<ul>
+			<li class="mxmlb_active_item_menu">
+				<a href="<?php echo admin_url(); ?>admin.php?page=mxmtzc-mx-time-zone-clocks-menu">Main settings</a>			
+			</li>
+			<li class="">
+				<a href="<?php echo admin_url(); ?>admin.php?page=mx_clocks_additional_plugins">Additional Plugins</a>			
+			</li>
+		</ul>
+
+	</nav>
+
+	<div class="mxmtzc_review">
+
+		<p>
+			If you like my work, please, leave a nice review <a href="https://wordpress.org/plugins/mx-time-zone-clocks/#reviews" target="_blank">here</a>.
+		</p>
+
+		<p>
+			Thank you!
+		</p>
+
+	</div>
+
 	<!-- display clock -->
 	<div class="mx-block_wrap">
 
@@ -35,7 +60,7 @@
 
 		<?php
 
-			$array_of_clock_disign = array( 'clock-face1.png','clock-face2.png','clock-face4.png','clock-face5.png','clock-face6.png','clock-face7.png','clock-face8.jpg','clock-face9.jpg','clock-face10.png','clock-face11.png','clock-face12.png','clock-face13.jpg','clock-face14.jpg','clock-face15.jpg','clock-face17.jpg','clock-face18.png','clock-face19.png','clock-face20.jpg','clock-face21.png','clock-face22.jpg','clock-face23.png','clock-face24.png','clock-face25.png' );
+			$array_of_clock_disign = array( 'clock-face30.png','clock-face29.png','clock-face28.png','clock-face27.png','clock-face26.png','clock-face1.png','clock-face2.png','clock-face4.png','clock-face5.png','clock-face6.png','clock-face7.png','clock-face8.jpg','clock-face9.jpg','clock-face10.png','clock-face11.png','clock-face12.png','clock-face13.jpg','clock-face14.jpg','clock-face15.jpg','clock-face17.jpg','clock-face18.png','clock-face19.png','clock-face20.jpg','clock-face21.png','clock-face22.jpg','clock-face23.png','clock-face24.png','clock-face25.png' );
 
 		?>
 
@@ -57,6 +82,63 @@
 
 			<?php endforeach; ?>
 			
+		</div>
+
+	</div>
+
+	<!-- upload clock -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Upload clock', 'mxmtzc-domain' ); ?></h3>
+
+		<h4><?php echo __( 'The recommended size of image is 120x120px.', 'mxmtzc-domain' ); ?></h4>
+
+		<!-- image upload -->
+		<div class="mx-image-uploader">
+
+			<?php
+
+				$image_url = '';
+
+			?>
+
+			<button
+				class="mxmtzc_upload_image"
+				<?php echo $image_url ? 'style="display: none;"' : ''; ?>
+			>Choose image</button>				
+
+			<!-- here we will save an id of image -->
+			<input
+				name="mxmtzc_clock_upload"
+				id="mxmtzc_clock_upload"
+				type="hidden"
+				class="mxmtzc_upload_image_save"
+				value=""
+			/>
+
+			<!-- show an image -->
+			<img
+				src="<?php echo $image_url ? $image_url : ''; ?>"					
+				style="width: 120px;"
+				alt=""
+				class="mxmtzc_upload_image_show"
+				<?php echo $image_url ? 'style="display: none;"' : ''; ?>						
+			/>
+
+			<!-- remove image -->
+			<a
+				href="#"
+				class="mxmtzc_upload_image_remove"
+				<?php echo !$image_url ? 'style="display: none;"' : ''; ?>
+			>Remove Image</a>
+
+		</div>
+
+		<h4><?php echo __( 'How can I resize an image?', 'mxmtzc-domain' ); ?></h4>
+
+		<div class="mxmtzc_upload_clock_resize">
+			<a href="<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/resize-1.jpg" target="_blank"><img src="<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/resize-1.jpg" alt=""></a>
+			<a href="<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/resize-2.jpg" target="_blank"><img src="<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/resize-2.jpg" alt=""></a>
 		</div>
 
 	</div>
@@ -261,14 +343,39 @@
 
 		</p>
 
-	</div>	
+	</div>
+
+	<!-- super simple clock -->
+	<div class="mx-block_wrap">
+
+		<h3><?php echo __( 'Super Simple Clock', 'mxmtzc-domain' ); ?></h3>
+
+		<p>
+			<?php echo __( 'By default', 'mxmtzc-domain' ); ?> - <b>False</b>
+		</p>
+
+		<p class="mxmtzc_super_simple_wrap">
+			
+			<input type="radio" id="mxmtzc_super_simple1" value="false" name="mxmtzc_super_simple" checked="checked" />
+			<label for="mxmtzc_super_simple1"><?php echo __( 'False', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+		<p class="mxmtzc_super_simple_wrap">
+			
+			<input type="radio" id="mxmtzc_super_simple2" value="true" name="mxmtzc_super_simple" />
+			<label for="mxmtzc_super_simple2"><?php echo __( 'True', 'mxmtzc-domain' ); ?></label>
+
+		</p>
+
+	</div>
 
 	<!-- shortcode -->
 	<div class="mx-block_wrap" id="mx_time_zone_shortcode">		
 
 		<div class="mx-time-zone-shortcode">
 
-			<span><?php echo __( 'Your shortcode:', 'mxmtzc-domain' ); ?></span>
+			<span><?php echo __( 'Copy this shortcode to any page or article:', 'mxmtzc-domain' ); ?></span>
 			<div class="mxmtzc_time_zone_shortcode_body">
 				[mxmtzc_time_zone_clocks time_zone="<span id="mxmtzc_time_zone_value">Australia/Sydney</span>"
 				city_name="<span id="mxmtzc_city_name_value">Wilton</span>"
@@ -280,6 +387,8 @@
 				show_days="<span id="mxmtzc_show_days_value">true</span>" clock_font_size="<span id="mxmtzc_font_size_attr_value"></span>" 
 				show_seconds="<span id="mxmtzc_show_seconds_value">true</span>"
 				arrow_type="<span id="mxmtzc_arrow_type_value">classical</span>"
+				super_simple="<span id="mxmtzc_super_simple_value">false</span>"
+				clock_upload="<span id="mxmtzc_clock_upload_value">false</span>"
 				]
 			</div>
 

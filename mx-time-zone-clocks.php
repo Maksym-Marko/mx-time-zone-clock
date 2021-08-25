@@ -4,8 +4,8 @@ Plugin Name: MX Time Zone Clocks
 Plugin URI: https://github.com/Maxim-us/mx-time-zone-clock
 Description: Clocks for different time zones for your website.
 Author: Marko Maksym
-Version: 3.0
-Author URI: https://github.com/Maxim-us
+Version: 3.4.1
+Author URI: https://markomaksym.com.ua/
 */
 
 // Exit if accessed directly
@@ -74,7 +74,7 @@ if ( ! defined( 'MXMTZC_PLUGIN_ABS_PATH' ) ) {
 if ( ! defined( 'MXMTZC_PLUGIN_VERSION' ) ) {
 
 	// version
-	define( 'MXMTZC_PLUGIN_VERSION', '3.0' ); // Must be replaced before production on for example '1.0'
+	define( 'MXMTZC_PLUGIN_VERSION', '3.4' ); // Must be replaced before production on for example '1.0'
 
 }
 

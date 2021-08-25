@@ -34,11 +34,21 @@ jQuery( document ).ready( function( $ ) {
 	// choose clock type
 	$( '.mx-time-zone-design-list' ).find( '.mx-time-zone-design-item' ).on( 'click', function() {
 
-		var image_src = $( this ).find( 'img' ).attr( 'data-image-src' );
+		var image_upload = $( '#mxmtzc_clock_upload' ).val();
 
-		$( '#mxmtzc_clock_type_value' ).text( image_src );		
+		if( image_upload === '' ) {
 
-		mxmtzc_show_notification( $ );
+			var image_src = $( this ).find( 'img' ).attr( 'data-image-src' );
+
+			$( '#mxmtzc_clock_type_value' ).text( image_src );		
+
+			mxmtzc_show_notification( $ );
+
+		} else {
+
+			alert( 'To choose the default clock, please, remove the image from "Upload clock" section!' );
+
+		}		
 
 	} );
 
@@ -46,6 +56,12 @@ jQuery( document ).ready( function( $ ) {
 	$( '#mxmtzc_time_zone_name' ).on( 'blur', function() {
 
 		var time_zone_name = $( this ).val();
+
+		if( time_zone_name === '' ) {
+
+			time_zone_name = 'Australia/Sydney';
+
+		}
 
 		$( '#mxmtzc_time_zone_value' ).text( time_zone_name );
 
@@ -164,6 +180,31 @@ jQuery( document ).ready( function( $ ) {
 		mxmtzc_show_notification( $ );
 
 	} );
+
+	// super simple clock
+	$( '[name="mxmtzc_super_simple"]' ).on( 'change', function() {
+
+		var arrow_type = $( this ).val();
+
+		$( '#mxmtzc_super_simple_value' ).text( arrow_type );
+
+		mxmtzc_show_notification( $ );
+
+	} );
+
+	// upload image
+	$( '[name="mxmtzc_clock_upload"]' ).on( 'change', function() {
+
+		var _val = $( this ).val();
+
+		_val = _val === '' ? 'false' : _val
+
+		$( '#mxmtzc_clock_upload_value' ).text( _val );
+
+		mxmtzc_show_notification( $ );
+
+	} );
+	
 
 } );
 
