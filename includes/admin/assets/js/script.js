@@ -1,5 +1,25 @@
 jQuery( document ).ready( function( $ ) {
 
+	// Admin Notices
+	$( document ).on( 'click', '.mxmtzc-admin-notice .notice-dismiss', function( e ) {
+		e.preventDefault();
+
+		const data = {
+			action: 'mxmtzc_dismiss_admin_notice',
+			notice: 'hire_developer',
+			nonce: mxmtzc_admin_localize.nonce
+		};
+
+		jQuery.post(mxmtzc_admin_localize.ajax_url, data, function (response) {
+
+			// console.log(response)
+
+		});
+
+	} );
+
+	// 
+
 	$( '.mxmtzc_save_notice' ).on( 'click', function() {
 
 		var scroll_top_to_shortcode = $( '#mx_time_zone_shortcode' ).offset().top;
@@ -204,7 +224,35 @@ jQuery( document ).ready( function( $ ) {
 		mxmtzc_show_notification( $ );
 
 	} );
+
+	$( '#mxCopyShortcode' ).on( 'click', function( e ) {
+
+		e.preventDefault();
+
+		copyToClipboard( $( '.mxmtzc_time_zone_shortcode_body' ) );
+
+	} );
 	
+	// copy shortcode
+	function copyToClipboard(element) {
+
+	    var $temp = $( '<input>' );
+
+	    $( 'body' ).append( $temp );
+
+	    var shortcode = $( element ).text().replace( /(\r\n|\n|\r|\s+)/gm, ' ' );
+
+	    shortcode = shortcode.replace( /(\s+)/gm, ' ' );
+
+	    $temp.val( shortcode ).select();
+
+	    document.execCommand( 'copy' );
+
+	    alert( 'Copied: ' + shortcode + '. \r\n You can now paste this code into your page.' );
+
+	    $temp.remove();
+
+	}
 
 } );
 

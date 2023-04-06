@@ -413,7 +413,7 @@
 
       }   
 
-      element_time_zone.text( time_zone_name );
+      element_time_zone.html( time_zone_name );
 
       // time zone      
       _this.append( element_time_zone );

@@ -2,8 +2,8 @@
 Contributors: markomaksym
 Tags: clock on the website, clock, time zone, часы на сайт, часы, годинник
 Requires at least: 4.9
-Tested up to: 5.8
-Stable tag: 3.4.1
+Tested up to: 6.2
+Stable tag: 3.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,21 @@ Clocks for different time zones for your website.
 4. Upload your own dial
 
 == Changelog ==
+
+= 3.9 =
+Small Bug fixed.
+
+= 3.8 =
+Tested on WordPress v6.2. Added some features.
+
+= 3.7 =
+Display extra characters.
+
+= 3.6 =
+Cyrillic bug fixed.
+
+= 3.5 =
+Module's bugs fixed. Copy shortcode button added.
 
 = 3.4.1 =
 XSS vulnerability fixed.

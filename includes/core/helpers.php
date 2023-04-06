@@ -30,3 +30,12 @@ function mxmtzc_use_model( $model ) {
 	require_once MXMTZC_PLUGIN_ABS_PATH . 'includes/admin/models/' . $model . '.php';
 
 }
+
+/*
+* Include a view
+*/
+function mxmtzc_include_view( $view ) {
+
+	include MXMTZC_PLUGIN_ABS_PATH . 'includes/admin/views/' . $view . '.php';
+
+}

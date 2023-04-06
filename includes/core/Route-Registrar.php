@@ -81,7 +81,7 @@ class MXMTZC_Route_Registrar
 	* $sub_menu_slug 	- slug of sub menu
 	*
 	*/
-	public function mxmtzc_set_data( $controller, $action, $slug = MXMTZC_MAIN_MENU_SLUG, array $menu_properties, $sub_menu_slug = false )
+	public function mxmtzc_set_data( $controller, $action, $slug = MXMTZC_MAIN_MENU_SLUG, array $menu_properties = [], $sub_menu_slug = false )
 	{
 
 		// set controller

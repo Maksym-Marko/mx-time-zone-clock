@@ -24,4 +24,11 @@ class MXMTZC_Main_Page_Controller extends MXMTZC_Controller
 
 	}
 
+	public function offer()
+	{
+
+		return new MXMTZC_View( 'offer' );
+
+	}
+
 }

@@ -36,7 +36,7 @@ class MXMTZC_Model
 	/**
 	* select row from the database
 	*/
-	public function mxmtzc_get_row( $table = NULL, $wher_name, $wher_value )
+	public function mxmtzc_get_row( $table = NULL, $wher_name = 'name', $wher_value = 'value' )
 	{
 
 		$table_name = $this->wpdb->prefix . $this->table;

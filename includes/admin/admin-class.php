@@ -1,7 +1,7 @@
 <?php
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH')) exit;
 
 class MXMTZC_Admin_Main
 {
@@ -16,7 +16,6 @@ class MXMTZC_Admin_Main
 	*/
 	public function __construct()
 	{
-
 	}
 
 	/*
@@ -26,15 +25,20 @@ class MXMTZC_Admin_Main
 	{
 
 		// enqueue_scripts class
-		mxmtzc_require_class_file_admin( 'enqueue-scripts.php' );
+		mxmtzc_require_class_file_admin('enqueue-scripts.php');
 
 		MXMTZC_Enqueue_Scripts::mxmtzc_register();
 
 		// options update
-		mxmtzc_require_class_file_admin( 'update-clock-optons.php' );
+		mxmtzc_require_class_file_admin('update-clock-optons.php');
 
-			MXMTZC_Update_Clock_Optons::mx_update_options();
+		MXMTZC_Update_Clock_Optons::mx_update_options();
 
+		// Admin Notices
+		mxmtzc_require_class_file_admin('admin-notices.php');
+
+		MXMTZCAdminNotices::intNotices();
+		MXMTZCAdminNotices::registerAjaxActions();
 	}
 
 	/*
@@ -44,22 +48,20 @@ class MXMTZC_Admin_Main
 	{
 
 		// require model file
-		foreach ( $this->models_collection as $model ) {
-			
-			mxmtzc_use_model( $model );
+		foreach ($this->models_collection as $model) {
 
-		}		
-
+			mxmtzc_use_model($model);
+		}
 	}
 
 	/**
-	* registration ajax actions
-	*/
+	 * registration ajax actions
+	 */
 	public function mxmtzc_registration_ajax_actions()
 	{
 
 		// ajax requests
-		
+
 	}
 
 	/*
@@ -69,20 +71,24 @@ class MXMTZC_Admin_Main
 	{
 
 		// main menu item
-		MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'index', '', [
+		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'index', '', [
 			'page_title' 	=> 'MX Time Zone Clocks Settings',
 			'menu_title' 	=> 'Time Zone Clocks',
 			'dashicons' 	=> 'dashicons-clock'
-		] );
+		]);
 
 		// additional plugins
 		// hide menu item
-		MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'hidemenu', 'NULL', [
+		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'hidemenu', 'NULL', [
 			'page_title' => 'Additional plugins',
-		], 'mx_clocks_additional_plugins' );
+		], 'mx_clocks_additional_plugins');
 
+		// offer
+		// hide menu item
+		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'offer', 'NULL', [
+			'page_title' => 'Do you need a Web Developer?',
+		], 'mx_clocks_offer');
 	}
-
 }
 
 // Initialize

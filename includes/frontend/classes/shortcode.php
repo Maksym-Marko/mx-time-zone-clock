@@ -42,7 +42,7 @@ class MXMTZC_Shortcode
 
 			if( isset( $atts['city_name'] ) ) {
 
-				$city_name = esc_attr( $atts['city_name'] );
+				$city_name = html_entity_decode( esc_attr( $atts['city_name'] ) );
 
 			}
 

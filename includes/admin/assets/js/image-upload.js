@@ -53,8 +53,11 @@ jQuery( document ).ready( function( $ ) {
 			// hide "upload" button
 			mx_upload_button.hide();
 
+			// hide clocks
+			$( '.mx-clock-apperiance_box' ).hide( 'slow' );
+
 			// change
-			$( '#mxmtzc_clock_upload' ).change();
+			$( '#mxmtzc_clock_upload' ).change(); 
 
 		} );
 
@@ -81,6 +84,11 @@ jQuery( document ).ready( function( $ ) {
 
 		// hide "remove" button
 		remove_button.hide();
+
+		// show clocks
+		if( ! $( '#mxmtzc_display_clock1' ).is(':checked') ) {
+			$( '.mx-clock-apperiance_box' ).show( 'slow' );
+		}
 
 		// change
 		$( '#mxmtzc_clock_upload' ).change();
