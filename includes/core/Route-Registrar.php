@@ -43,11 +43,15 @@ class MXMTZC_Route_Registrar
 	*/
 	public $sub_menu_slug = false;
 
+	public $plugin_name;
+
 	/**
 	* MXMTZC_Route_Registrar constructor
 	*/
 	public function __construct( ...$args )
 	{
+
+		$this->plugin_name = MXMTZC_PLUGN_BASE_NAME;
 
 		// set data
 		$this->mxmtzc_set_data( ...$args );
@@ -81,7 +85,7 @@ class MXMTZC_Route_Registrar
 	* $sub_menu_slug 	- slug of sub menu
 	*
 	*/
-	public function mxmtzc_set_data( $controller, $action, $slug = MXMTZC_MAIN_MENU_SLUG, array $menu_properties = [], $sub_menu_slug = false )
+	public function mxmtzc_set_data( $controller, $action, $slug = MXMTZC_MAIN_MENU_SLUG, array $menu_properties = [], $sub_menu_slug = false, $settings_area = false )
 	{
 
 		// set controller
@@ -123,6 +127,18 @@ class MXMTZC_Route_Registrar
 			
 		}
 
+		/*
+        * check if it's settings menu item
+        */
+        if ($settings_area !== false) {
+
+            $mxmtzc_callback_function_menu = 'settings_area_menu_item';
+
+            // add link Settings under the name of the plugin
+            add_filter( "plugin_action_links_$this->plugin_name", [$this, 'create_settings_link'] );
+            
+        }
+
 		/**
 		* require controller
 		*/
@@ -144,6 +160,33 @@ class MXMTZC_Route_Registrar
 		add_action( 'admin_menu', array( $this, $mxmtzc_callback_function_menu ) );
 
 	}
+
+	/**
+    * Create Settings area menu item
+    */
+    public function settings_area_menu_item()
+    {
+        
+        // create a settings menu
+        add_options_page(
+            __( $this->properties['page_title'], 'mxmtzc-domain' ),
+            __( $this->properties['menu_title'], 'mxmtzc-domain' ),
+            $this->properties['capability'],
+            $this->sub_menu_slug,
+            [ $this, 'mxmtzc_view_connector' ]
+        );
+
+    }
+        public function create_settings_link( $links )
+        { 
+
+            $settingsLink = '<a href="' . get_admin_url() . 'admin.php?page=' . $this->sub_menu_slug . '">' . __( $this->properties['menu_title'], 'mxmtzc-domain' ) . '</a>'; // options-general.php
+
+            array_push( $links, $settingsLink );
+
+            return $links;
+
+        }
 
 	/**
 	* Create Main menu

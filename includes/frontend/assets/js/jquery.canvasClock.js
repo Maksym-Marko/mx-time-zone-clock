@@ -26,7 +26,8 @@
       lang_for_date:  'ua',
       show_days:      false,
       arrow_type:     'classical',
-      super_simple:   false
+      super_simple:   false,
+      arrows_color:   'unset'
     }, options );
 
     var degreesToRadians = function(degrees) {
@@ -72,7 +73,7 @@
 
     }
 
-    var drawHourHand = function(context, theDate, time_zone, arrow_type){
+    var drawHourHand = function(context, theDate, time_zone, arrow_type, arrows_color){
 
       var hours = theDate.getHours() + theDate.getMinutes() / 60;
 
@@ -90,6 +91,10 @@
 
       context.save();
       context.fillStyle = 'black';
+      if( arrows_color !== 'unset' ) {
+        context.fillStyle = arrows_color;
+      }
+      
       context.rotate(degreesToRadians(degrees));
 
       if( arrow_type === 'modern' ) {
@@ -105,7 +110,7 @@
       context.restore();
     };
 
-    var drawMinuteHand = function(context, theDate, time_zone, arrow_type){
+    var drawMinuteHand = function(context, theDate, time_zone, arrow_type, arrows_color){
 
       var minutes = theDate.getMinutes() + theDate.getSeconds() / 60;
 
@@ -119,6 +124,9 @@
 
       context.save();
       context.fillStyle = 'black';
+      if( arrows_color !== 'unset' ) {
+        context.fillStyle = arrows_color;
+      }
       context.rotate(degreesToRadians(minutes * 6));
 
       if( arrow_type === 'modern' ) {
@@ -136,14 +144,21 @@
       context.restore();
     };
 
-    var drawSecondHand = function(context, theDate, time_zone, arrow_type){
+    var drawSecondHand = function(context, theDate, time_zone, arrow_type, arrows_color){
       context.save();
       
       var _fillStyle = 'red';
+      if( arrows_color !== 'unset' ) {
+        _fillStyle = arrows_color;
+      }
 
       if( arrow_type === 'modern' ) {
 
         _fillStyle = '#000'
+
+        if( arrows_color !== 'unset' ) {
+          _fillStyle = arrows_color;
+        }
 
       }
 
@@ -594,13 +609,13 @@
               writeBrandName(canvasClock.context, canvasClock.brandName);
 
             if(canvasClock.showHourHand)
-              drawHourHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
+              drawHourHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type, canvasClock.arrows_color);
 
             if(canvasClock.showMinuteHand)
-              drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
+              drawMinuteHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type, canvasClock.arrows_color);
 
             if(canvasClock.showSecondHand)
-              drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type);
+              drawSecondHand(canvasClock.context, theDate, canvasClock.time_zone, canvasClock.arrow_type, canvasClock.arrows_color);
 
             _this.append(show_time(_this, canvasClock.time_zone, canvasClock.date_format, canvasClock.showSecondHand));
 

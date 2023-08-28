@@ -544,3 +544,11 @@ a.mx-offer-button:hover {
 .mxmtzc_copy_button:hover {
     background: #3a92db;
 }
+.mxmtzc_df {
+    display: flex;
+}
+.mxmlb_arrows_color_wrapper .mxmtzc_arrows_color_wrap {
+    margin-bottom: 10px;
+    width: 100px;
+    justify-content: space-between;
+}

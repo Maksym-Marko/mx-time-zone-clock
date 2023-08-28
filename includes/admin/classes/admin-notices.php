@@ -10,6 +10,19 @@ class MXMTZCAdminNotices
     {
 
         add_action('wp_ajax_mxmtzc_dismiss_admin_notice', ['MXMTZCAdminNotices', 'dismissAdminNotice'], 10, 1);
+
+        add_action('wp_ajax_olena_theme_notice_viewed', ['MXMTZCAdminNotices','ajax_olena_theme_notice_viewed']);
+    }
+
+    /**
+     * Set Admin Notice as Viewed.
+     *
+     * @return void
+     */
+    public static function ajax_olena_theme_notice_viewed()
+    {
+        update_user_meta(get_current_user_id(), '_olena_theme_install_notice_viewed', 'true');
+        die;
     }
 
     public static function dismissAdminNotice()
@@ -35,6 +48,7 @@ class MXMTZCAdminNotices
     public static function intNotices()
     {
         add_action('admin_notices', ['MXMTZCAdminNotices', 'hireDeveloper']);
+        add_action('admin_notices', ['MXMTZCAdminNotices', 'olenaTheme']);
     }
 
     public static function hireDeveloper()
@@ -45,7 +59,7 @@ class MXMTZCAdminNotices
             if ($_GET['page'] == 'mxmtzc-mx-time-zone-clocks-menu') return;
         }
 
-        if (get_option('mxmtzc_hire_developer')) return;
+        if (get_option('mxmtzc_hire_developer')) return; //_olena_theme_install_notice_viewed
 ?>
         <div class="notice notice-success is-dismissible mxmtzc-admin-notice">
             <?php mxmtzc_include_view('components/hire-developer'); ?>
@@ -53,4 +67,23 @@ class MXMTZCAdminNotices
 <?php
 
     }
+
+    public static function olenaTheme()
+    {
+
+        if (isset($_GET['page'])) {
+
+            if ($_GET['page'] == 'mxmtzc-mx-time-zone-clocks-menu') return;
+        }
+
+        if ('true' === get_user_meta(get_current_user_id(), '_olena_theme_install_notice_viewed', true)) return;
+?>
+    <div class="notice notice-success is-dismissible olena-notification">
+        <?php mxmtzc_include_view('components/olena-theme'); ?>
+    </div>
+        
+<?php
+
+    }
+
 }

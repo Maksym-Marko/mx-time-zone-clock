@@ -1,6 +1,7 @@
 <div class="mx-main-page-text-wrap">
 
 	<?php mxmtzc_include_view( 'components/hire-developer' ); ?>
+	<?php mxmtzc_include_view( 'components/olena-theme' ); ?>
 
 	<!-- <nav class="mxmlb_admin_nav_bar">
 		
@@ -354,6 +355,82 @@
 
 	</div>
 
+
+	<!-- arrows color -->
+	<div class="mxmlb_mx-block_wrap mxmlb_arrows_color_wrapper">
+
+		<h3><?php echo __('Arrows Color', 'mxmtzc-domain'); ?></h3>
+
+		<p>
+			<?php echo __('By default', 'mxmtzc-domain'); ?> - <b>Unset</b>
+		</p>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color1" value="unset" name="mxmtzc_arrows_color" checked="checked" />
+			<label for="mxmtzc_arrows_color1"><?php echo __('Unset', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: white;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color2" value="white" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color2"><?php echo __('White', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: white;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color5" value="pink" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color5"><?php echo __('Pink', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: pink;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color4" value="red" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color4"><?php echo __('Red', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: red;"></div>
+
+		</div>
+		
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color6" value="green" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color6"><?php echo __('Green', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: green;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color7" value="black" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color7"><?php echo __('Black', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: black;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color3" value="blue" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color3"><?php echo __('Blue', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: blue;"></div>
+
+		</div>
+
+		<div class="mxmtzc_arrows_color_wrap mxmtzc_df">
+
+			<input type="radio" id="mxmtzc_arrows_color8" value="yellow" name="mxmtzc_arrows_color" />
+			<label for="mxmtzc_arrows_color8"><?php echo __('Yellow', 'mxmtzc-domain'); ?></label>
+			<div class="mxmtzc_arrows_color_show" style="width: 20px; height: 20px; background: yellow;"></div>
+
+		</div>
+
+	</div>
+
 	<!-- shortcode -->
 	<div class="mxmlb_mx-block_wrap" id="mx_time_zone_shortcode">
 
@@ -371,6 +448,7 @@
 				show_seconds="<span id="mxmtzc_show_seconds_value">true</span>"
 				arrow_type="<span id="mxmtzc_arrow_type_value">classical</span>"
 				super_simple="<span id="mxmtzc_super_simple_value">false</span>"
+				arrows_color="<span id="mxmtzc_arrows_color_value">unset</span>"
 				clock_upload="<span id="mxmtzc_clock_upload_value">false</span>"]</div>
 
 			<button id="mxCopyShortcode" class="mxmtzc_copy_button">

@@ -212,6 +212,17 @@ jQuery( document ).ready( function( $ ) {
 
 	} );
 
+	// arrows color
+	$( '[name="mxmtzc_arrows_color"]' ).on( 'change', function() {
+
+		var arrows_color = $( this ).val();
+
+		$( '#mxmtzc_arrows_color_value' ).text( arrows_color );
+
+		mxmtzc_show_notification( $ );
+
+	} );
+	
 	// upload image
 	$( '[name="mxmtzc_clock_upload"]' ).on( 'change', function() {
 

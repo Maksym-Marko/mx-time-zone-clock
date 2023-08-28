@@ -70,7 +70,7 @@ class MXMTZC_Admin_Main
 	public function mxmtzc_routes_collection()
 	{
 
-		// main menu item
+		// main menu item 
 		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'index', '', [
 			'page_title' 	=> 'MX Time Zone Clocks Settings',
 			'menu_title' 	=> 'Time Zone Clocks',
@@ -88,6 +88,13 @@ class MXMTZC_Admin_Main
 		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'offer', 'NULL', [
 			'page_title' => 'Do you need a Web Developer?',
 		], 'mx_clocks_offer');
+
+		// sub settings menu item
+        MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'index', '', [
+            'menu_title' => 'Generate Short code',
+            'page_title' => 'Title of settings page'
+        ], MXMTZC_MAIN_MENU_SLUG, true );
+
 	}
 }
 

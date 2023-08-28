@@ -20,9 +20,6 @@ class MXMTZC_Shortcode
 	public function mxmtzc_register_shortcode()
 	{
 
-		// register scripts and styles
-		add_action( 'wp_enqueue_scripts', array( $this, 'mxmtzc_enqueue' ) );
-
 		// register shortcode
 		add_shortcode( 'mxmtzc_time_zone_clocks', array( $this, 'mxmtzc_time_zone_clocks_function' ) );
 
@@ -147,6 +144,16 @@ class MXMTZC_Shortcode
 
 			}
 
+			// arrows color
+			$arrows_color = 'unset';
+
+			if( isset( $atts['arrows_color'] ) ) {
+
+				$arrows_color = esc_attr( $atts['arrows_color'] );
+
+			}
+
+			// image
 			$clock_type = 'clock-face2.png';
 
 			if( isset( $atts['clock_type'] ) ) {
@@ -184,49 +191,44 @@ class MXMTZC_Shortcode
 
 					<?php if( $clock_upload == 'false' ) : ?>
 				
-						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/<?php echo $clock_type; ?>'></div>
+						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el'
+							data-bg-img-url='<?php echo MXMTZC_PLUGIN_URL; ?>includes/admin/assets/img/<?php echo $clock_type; ?>'
+							data-time_zone='<?php echo $time_zone; ?>'
+							data-city_name='<?php echo $city_name; ?>'
+							data-date_format='<?php echo $time_format; ?>'
+							data-digital_clock='<?php echo $digital_clock; ?>'
+							data-lang='<?php echo $lang; ?>'
+							data-lang_for_date='<?php echo $lang_for_date; ?>'
+							data-show_days='<?php echo $show_days; ?>'
+							data-showSecondHand='<?php echo $show_seconds; ?>'
+							data-arrow_type='<?php echo $arrow_type; ?>'
+							data-super_simple='<?php echo $super_simple; ?>'
+							data-arrows_color='<?php echo $arrows_color; ?>'
+						></div>
 
 					<?php else : ?>
 
-						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' data-bg-img-url='<?php echo $clock_upload; ?>'></div>
+						<div class='<?php echo $class_of_clock; ?> mx-clock-live-el' 
+							data-bg-img-url='<?php echo $clock_upload; ?>'
+							data-time_zone='<?php echo $time_zone; ?>'
+							data-city_name='<?php echo $city_name; ?>'
+							data-date_format='<?php echo $time_format; ?>'
+							data-digital_clock='<?php echo $digital_clock; ?>'
+							data-lang='<?php echo $lang; ?>'
+							data-lang_for_date='<?php echo $lang_for_date; ?>'
+							data-show_days='<?php echo $show_days; ?>'
+							data-showSecondHand='<?php echo $show_seconds; ?>'
+							data-arrow_type='<?php echo $arrow_type; ?>'
+							data-super_simple='<?php echo $super_simple; ?>'
+							data-arrows_color='<?php echo $arrows_color; ?>'
+						></div>
 
 					<?php endif; ?>
 
 				</div>
 
-				<script type="text/javascript">
-
-					jQuery(document).ready(function(){
-
-						jQuery(".<?php echo $class_of_clock; ?>").canvasClock({
-							time_zone: "<?php echo $time_zone; ?>",
-							city_name: "<?php echo $city_name; ?>",
-							date_format: <?php echo $time_format; ?>,
-							digital_clock: <?php echo $digital_clock; ?>,
-							lang: "<?php echo $lang; ?>",
-							lang_for_date: "<?php echo $lang_for_date; ?>",
-							show_days: <?php echo $show_days; ?>,
-							showSecondHand: <?php echo $show_seconds; ?>,
-							arrow_type: "<?php echo $arrow_type; ?>",
-							super_simple: <?php echo $super_simple; ?>
-
-						});
-
-					} );
-
-				</script>
-
 			<?php return ob_get_clean();
 
-		}
-
-		public function mxmtzc_enqueue()
-		{
-
-			wp_enqueue_style( 'mxmtzc_style', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/css/style.css', array(), MXMTZC_PLUGIN_VERSION, 'all' );
-
-			wp_enqueue_script( 'mxmtzc_script_frontend', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/js/jquery.canvasClock.js', array( 'jquery' ), MXMTZC_PLUGIN_VERSION, false );
-		
 		}
 
 }

@@ -31,4 +31,11 @@ class MXMTZC_Main_Page_Controller extends MXMTZC_Controller
 
 	}
 
+	public function settingsMenuItemAction()
+    {
+
+        return new MXMTZC_View( 'settings-page' );
+
+    }
+
 }

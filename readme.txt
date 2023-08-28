@@ -1,9 +1,9 @@
 === MX Time Zone Clocks ===
 Contributors: markomaksym
-Tags: clock on the website, clock, time zone, часы на сайт, часы, годинник
+Tags: clock on the website, clock, time zone, годинник
 Requires at least: 4.9
-Tested up to: 6.2
-Stable tag: 3.9
+Tested up to: 6.3
+Stable tag: 4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ Clocks for different time zones for your website.
 4. Upload your own dial
 
 == Changelog ==
+
+= 4.0 =
+Tested for WordPress 6.3. Added the ability to change the color of the arrows.
 
 = 3.9 =
 Small Bug fixed.
