@@ -32,9 +32,9 @@ class MXMTZC_Enqueue_Scripts_Frontend
 			
 			wp_enqueue_style( 'mxmtzc_style', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/css/style.css', array(), MXMTZC_PLUGIN_VERSION, 'all' );
 
-			wp_enqueue_script( 'mxmtzc_script_frontend', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/js/jquery.canvasClock.js', array( 'jquery' ), MXMTZC_PLUGIN_VERSION, true );
+			wp_enqueue_script( 'mxmtzc_script_frontend', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/js/jquery.canvasClock.js', array( 'jquery' ), MXMTZC_PLUGIN_VERSION, false );
 			
-			wp_enqueue_script( 'mxmtzc_script', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/js/script.js', array( 'mxmtzc_script_frontend' ), MXMTZC_PLUGIN_VERSION, true );
+			wp_enqueue_script( 'mxmtzc_script', MXMTZC_PLUGIN_URL . 'includes/frontend/assets/js/script.js', array( 'jquery', 'mxmtzc_script_frontend' ), MXMTZC_PLUGIN_VERSION, false );
 		
 		}
 

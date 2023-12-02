@@ -2,8 +2,8 @@
 Contributors: markomaksym
 Tags: clock on the website, clock, time zone, годинник
 Requires at least: 4.9
-Tested up to: 6.3
-Stable tag: 4.0
+Tested up to: 6.4
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,10 @@ Clocks for different time zones for your website.
 
 <p>
 	Clocks with different time zones for your website.
+</p>
+
+<p>
+	Here you can find examples: <a href="https://markomaksym.com.ua/mx-time-zone-clocks/" target="_blank">https://markomaksym.com.ua/mx-time-zone-clocks/</a> 
 </p>
 
 <p>
@@ -53,6 +57,9 @@ Clocks for different time zones for your website.
 4. Upload your own dial
 
 == Changelog ==
+
+= 4.1 =
+Tested for WordPress 6.4. JS moved to head tag.
 
 = 4.0 =
 Tested for WordPress 6.3. Added the ability to change the color of the arrows.

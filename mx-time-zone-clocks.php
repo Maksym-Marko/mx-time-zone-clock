@@ -4,7 +4,7 @@ Plugin Name: MX Time Zone Clocks
 Plugin URI: https://github.com/Maxim-us/mx-time-zone-clock
 Description: Clocks for different time zones for your website.
 Author: Maksym Marko
-Version: 4.0
+Version: 4.1
 Author URI: https://markomaksym.com.ua/
 */
 
