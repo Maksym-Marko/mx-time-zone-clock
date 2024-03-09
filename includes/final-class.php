@@ -7,16 +7,6 @@ final class MXMTZCMXTimeZoneClocks
 {
 
 	/*
-	* MXMTZCMXTimeZoneClocks constructor
-	*/
-	public function __construct()
-	{
-
-		// ...
-
-	}
-
-	/*
 	* Include required core files
 	*/
 	public function mxmtzc_include()
@@ -64,6 +54,17 @@ final class MXMTZCMXTimeZoneClocks
 	
 	}
 
+	/**
+     * Include Gutenberg Features.
+     * 
+     * @return void
+     */
+    public function includeGutenbergPath()
+    {
+
+        require_once MXMTZC_PLUGIN_ABS_PATH . 'includes/gutenberg/gutenberg-main.php';
+    }
+
 }
 
 // create a new instance of final class
@@ -72,8 +73,11 @@ $final_class_instance = new MXMTZCMXTimeZoneClocks();
 // run core files
 $final_class_instance->mxmtzc_include();
 
-// include admin parth
+// include admin part
 $final_class_instance->mxmtzc_include_admin_path();
 
-// include frontend parth
+// include frontend part
 $final_class_instance->mxmtzc_include_frontend_path();
+
+// include gutenberg part
+$final_class_instance->includeGutenbergPath();

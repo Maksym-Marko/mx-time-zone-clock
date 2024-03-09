@@ -39,3 +39,14 @@ function mxmtzc_include_view( $view ) {
 	include MXMTZC_PLUGIN_ABS_PATH . 'includes/admin/views/' . $view . '.php';
 
 }
+
+/*
+* Require view for frontend panel
+*/
+function mxmtzc_require_view_file_frontend($file, $data = NULL)
+{
+
+    $data = $data;
+
+    require_once MXMTZC_PLUGIN_ABS_PATH . 'includes/frontend/views/' . $file;
+}

@@ -1,6 +1,6 @@
 <!--  -->
 <?php 
-    $message = esc_html__('If you are re looking for a brand new animated WordPress theme, check please Olena Theme. Here is a short viedo:', 'mxmtzc-domain');
+    $message = esc_html__('If you are looking for a brand new animated WordPress theme, please check Olena Theme. Here is a short viedo:', 'mxmtzc-domain');
     $button_url = esc_url('https://olena-theme.com.ua/');
     $button_text = 'Download Olena Theme';
 ?>
