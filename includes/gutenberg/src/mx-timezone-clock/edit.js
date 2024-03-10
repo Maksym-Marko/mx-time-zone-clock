@@ -1,7 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
-import { Panel, PanelBody, PanelRow, SelectControl, TextControl, ColorPicker, RadioControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, SelectControl, TextControl, ColorPicker, Button } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 import './editor.scss';
 import metadata from './block.json';
 import timezones from 'timezones-list';
@@ -10,10 +12,6 @@ import ISO6391 from 'iso-639-1';
 export default function Edit({ attributes, setAttributes }) {
 
 	const blockProps = useBlockProps();
-
-	const onChangeNumber = (number) => {
-		setAttributes({ postsNumber: number });
-	};
 
 	// time zones
 	const formattedTimezones = [];
@@ -66,6 +64,26 @@ export default function Edit({ attributes, setAttributes }) {
 		const img = `clock-face${key}.png`;
 		imageNames.push(img);
 	}
+
+	// image upload
+	const ALLOWED_MEDIA_TYPES = ['image']
+
+	const imageData = useSelect((select) => {
+		if (attributes.mediaId) {
+			return select('core').getEntityRecord('postType', 'attachment', attributes.mediaId);
+
+		} else {
+			return false
+		}
+	}, [attributes]);
+
+	useEffect(() => {
+		if (imageData?.media_details) {
+			setAttributes({
+				clock_upload: imageData.media_details.sizes.full.source_url
+			})
+		}
+	}, [imageData])
 
 	return [
 		<InspectorControls key="mx-settings">
@@ -265,7 +283,7 @@ export default function Edit({ attributes, setAttributes }) {
 						/>
 					</PanelRow>
 
-				</PanelBody>				
+				</PanelBody>
 
 				<PanelBody title={__('Arrows Color', 'mxmtzc-domain')} initialOpen={false}>
 					
@@ -280,7 +298,6 @@ export default function Edit({ attributes, setAttributes }) {
 
 				</PanelBody>
 
-
 				{typeof mxdfmtzc_localizer === 'object' && mxdfmtzc_localizer.hasOwnProperty('image_folder') ? (
 					<PanelBody title={__('Clock Type', 'mxmtzc-domain')} initialOpen={false}>
 						
@@ -289,7 +306,20 @@ export default function Edit({ attributes, setAttributes }) {
 							<div className="mx-timezone-clocks-types">
 								{imageNames.map((image, index) => {
 									return (<div key={index}>
-										<img src={mxdfmtzc_localizer.image_folder + image} />
+										<label htmlFor={'mx-timezone-clocks-type'+index}>
+											<img src={mxdfmtzc_localizer.image_folder + image} />
+											<input 
+												type="radio" 
+												name="mx-timezone-clocks-type"
+												id={'mx-timezone-clocks-type'+index}
+												value={image}
+												onChange={e => {
+													setAttributes({ clock_type: e.currentTarget.value })
+												}}
+												checked={image===attributes.clock_type}
+											/>
+										</label>
+										
 									</div>)
 								})}
 							</div>
@@ -301,9 +331,60 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelBody>
 					
 				) : ''}
-				
 
+				<PanelBody title={__('Upload Clock', 'mxmtzc-domain')} initialOpen={false}>
+					
+					<PanelRow>
 
+						<div className="mx-timezone-clocks-upload-image">
+
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={(media) => setAttributes({
+										mediaId: media.id
+									})}
+									allowedTypes={ALLOWED_MEDIA_TYPES}
+									value={attributes.mediaId}
+									render={({ open }) => (
+										<Button
+											icon="upload"
+											text={attributes.mediaId ? 'Change Image' : 'Upload Image'}
+											variant="secondary"
+											onClick={open}
+										/>
+									)}
+								/>
+							</MediaUploadCheck>
+
+							<div>
+								{attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (
+
+									<div className="mx-timezone-clocks-uploaded-image">
+
+										<img src={attributes.clock_upload} id={attributes.mediaId} />
+
+										<Button
+											icon="remove"
+											variant="secondary"
+											isDestructive="true"
+											onClick={() => {
+												setAttributes({
+													clock_upload: 'false',
+													mediaId: null
+												})
+											}}
+										/>
+										
+									</div>
+
+								) : (<h3>No image!</h3>)}	
+							</div>
+
+						</div>
+						
+					</PanelRow>
+
+				</PanelBody>
 
 
 

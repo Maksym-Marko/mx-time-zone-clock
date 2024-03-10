@@ -4,5 +4,33 @@
 	&>div {
 		width: 50%;
 		padding: 5px;
+		position: relative;
+		& input {
+			position: absolute;
+			opacity: 0;
+		}
+		& label {
+			&:has(input:checked) {
+				& img {
+					border: 2px solid #007cba;
+				}
+			}			
+		}
+	}
+}
+
+.mx-timezone-clocks-upload-image {
+	display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+	& .mx-timezone-clocks-uploaded-image {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		align-items: center;
+		justify-content: center;
 	}
 }

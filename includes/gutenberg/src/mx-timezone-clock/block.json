@@ -66,8 +66,11 @@
 		"clock_upload": {
 			"type": "string",
 			"default": "false"
+		},
+		"mediaId": {
+			"type": "string",
+			"default": null
 		}
-
 	},
 	"textdomain": "mxmtzc-domain",
 	"editorScript": "file:./index.js",

@@ -95,6 +95,10 @@ class MXDFMTZCGutenberg
                         'type' => 'string',
                         'default' => 'false'
                     ],
+                    'mediaId'  => [
+                        'type' => 'string',
+                        'default' => NULL
+                    ]
                 ],
                 'editor_script' => 'mx_server_side_rendering_script',
                 'render_callback'   => [$this, 'server_side_rendering_dynamic_render_callback'],
@@ -122,7 +126,7 @@ class MXDFMTZCGutenberg
             'arrows_color' => esc_attr($block_attributes['arrows_color']),
             'clock_type' => esc_attr($block_attributes['clock_type']),
             'clock_upload' => esc_attr($block_attributes['clock_upload']),
-
+            'mediaId' => esc_attr($block_attributes['mediaId'])
         ];
 
         mxmtzc_require_view_file_frontend('clock-render.php', $data);

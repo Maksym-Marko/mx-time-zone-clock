@@ -22,12 +22,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./includes/gutenberg/src/mx-timezone-clock/editor.scss");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./block.json */ "./includes/gutenberg/src/mx-timezone-clock/block.json");
-/* harmony import */ var timezones_list__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! timezones-list */ "./node_modules/timezones-list/dist/index.js");
-/* harmony import */ var timezones_list__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(timezones_list__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! iso-639-1 */ "./node_modules/iso-639-1/src/index.js");
-/* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(iso_639_1__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./includes/gutenberg/src/mx-timezone-clock/editor.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./block.json */ "./includes/gutenberg/src/mx-timezone-clock/block.json");
+/* harmony import */ var timezones_list__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! timezones-list */ "./node_modules/timezones-list/dist/index.js");
+/* harmony import */ var timezones_list__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(timezones_list__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! iso-639-1 */ "./node_modules/iso-639-1/src/index.js");
+/* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(iso_639_1__WEBPACK_IMPORTED_MODULE_10__);
+
+
 
 
 
@@ -42,15 +48,10 @@ function Edit({
   setAttributes
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  const onChangeNumber = number => {
-    setAttributes({
-      postsNumber: number
-    });
-  };
 
   // time zones
   const formattedTimezones = [];
-  const _timezones = timezones_list__WEBPACK_IMPORTED_MODULE_7___default().sort((a, b) => {
+  const _timezones = timezones_list__WEBPACK_IMPORTED_MODULE_9___default().sort((a, b) => {
     if (a.label < b.label) {
       return -1;
     }
@@ -69,7 +70,7 @@ function Edit({
 
   // locales
   const formattedLocales = [];
-  const locales = iso_639_1__WEBPACK_IMPORTED_MODULE_8___default().getAllCodes();
+  const locales = iso_639_1__WEBPACK_IMPORTED_MODULE_10___default().getAllCodes();
   locales.forEach(element => {
     let obj = {
       label: element,
@@ -94,6 +95,23 @@ function Edit({
     const img = `clock-face${key}.png`;
     imageNames.push(img);
   }
+
+  // image upload
+  const ALLOWED_MEDIA_TYPES = ['image'];
+  const imageData = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    if (attributes.mediaId) {
+      return select('core').getEntityRecord('postType', 'attachment', attributes.mediaId);
+    } else {
+      return false;
+    }
+  }, [attributes]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
+    if (imageData?.media_details) {
+      setAttributes({
+        clock_upload: imageData.media_details.sizes.full.source_url
+      });
+    }
+  }, [imageData]);
   return [(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     key: "mx-settings"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Panel, {
@@ -258,14 +276,61 @@ function Edit({
   }, imageNames.map((image, index) => {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       key: index
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+      htmlFor: 'mx-timezone-clocks-type' + index
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: mxdfmtzc_localizer.image_folder + image
-    }));
-  })))) : '')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "radio",
+      name: "mx-timezone-clocks-type",
+      id: 'mx-timezone-clocks-type' + index,
+      value: image,
+      onChange: e => {
+        setAttributes({
+          clock_type: e.currentTarget.value
+        });
+      },
+      checked: image === attributes.clock_type
+    })));
+  })))) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upload Clock', 'mxmtzc-domain'),
+    initialOpen: false
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mx-timezone-clocks-upload-image"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
+    onSelect: media => setAttributes({
+      mediaId: media.id
+    }),
+    allowedTypes: ALLOWED_MEDIA_TYPES,
+    value: attributes.mediaId,
+    render: ({
+      open
+    }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
+      icon: "upload",
+      text: attributes.mediaId ? 'Change Image' : 'Upload Image',
+      variant: "secondary",
+      onClick: open
+    })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mx-timezone-clocks-uploaded-image"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: attributes.clock_upload,
+    id: attributes.mediaId
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
+    icon: "remove",
+    variant: "secondary",
+    isDestructive: "true",
+    onClick: () => {
+      setAttributes({
+        clock_upload: 'false',
+        mediaId: null
+      });
+    }
+  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "No image!"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: "mx-render",
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-    block: _block_json__WEBPACK_IMPORTED_MODULE_6__.name,
+    block: _block_json__WEBPACK_IMPORTED_MODULE_8__.name,
     attributes: attributes
   }))];
 }
@@ -406,6 +471,28 @@ module.exports = window["wp"]["blocks"];
 
 "use strict";
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["element"];
 
 /***/ }),
 
@@ -1253,7 +1340,7 @@ module.exports = class ISO6391 {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"mxdfmtzc/mx-timezone-clock","version":"0.1.3","title":"MX Timezone Clock","category":"widgets","icon":"clock","description":"Add MX Timezone Clock","supports":{"html":false},"attributes":{"time_zone":{"type":"string","default":"Europe/London"},"city_name":{"type":"string","default":"London"},"time_format":{"type":"number","default":24},"digital_clock":{"type":"string","default":"false"},"lang":{"type":"string","default":"en"},"lang_for_date":{"type":"string","default":"en"},"show_days":{"type":"string","default":"false"},"clock_font_size":{"type":"number","default":14},"show_seconds":{"type":"string","default":"true"},"arrow_type":{"type":"string","default":"classical"},"super_simple":{"type":"string","default":"false"},"arrows_color":{"type":"string","default":"#333333"},"clock_type":{"type":"string","default":"clock-face2.png"},"clock_upload":{"type":"string","default":"false"}},"textdomain":"mxmtzc-domain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"mxdfmtzc/mx-timezone-clock","version":"0.1.3","title":"MX Timezone Clock","category":"widgets","icon":"clock","description":"Add MX Timezone Clock","supports":{"html":false},"attributes":{"time_zone":{"type":"string","default":"Europe/London"},"city_name":{"type":"string","default":"London"},"time_format":{"type":"number","default":24},"digital_clock":{"type":"string","default":"false"},"lang":{"type":"string","default":"en"},"lang_for_date":{"type":"string","default":"en"},"show_days":{"type":"string","default":"false"},"clock_font_size":{"type":"number","default":14},"show_seconds":{"type":"string","default":"true"},"arrow_type":{"type":"string","default":"classical"},"super_simple":{"type":"string","default":"false"},"arrows_color":{"type":"string","default":"#333333"},"clock_type":{"type":"string","default":"clock-face2.png"},"clock_upload":{"type":"string","default":"false"},"mediaId":{"type":"string","default":null}},"textdomain":"mxmtzc-domain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ }),
 
