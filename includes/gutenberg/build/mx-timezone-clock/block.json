@@ -29,11 +29,11 @@
     },
     "lang": {
       "type": "string",
-      "default": "en-US"
+      "default": "en"
     },
     "lang_for_date": {
       "type": "string",
-      "default": "en-US"
+      "default": "en"
     },
     "show_days": {
       "type": "string",
@@ -57,7 +57,7 @@
     },
     "arrows_color": {
       "type": "string",
-      "default": "unset"
+      "default": "#333333"
     },
     "clock_type": {
       "type": "string",

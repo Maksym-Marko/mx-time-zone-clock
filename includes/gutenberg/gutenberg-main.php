@@ -33,6 +33,10 @@ class MXDFMTZCGutenberg
             true
         );
 
+        wp_localize_script('mx_server_side_rendering_script', 'mxdfmtzc_localizer', [
+            'image_folder' => MXMTZC_PLUGIN_URL . 'includes/admin/assets/img/'
+        ]);
+
         register_block_type(
             __DIR__ . '/build/mx-timezone-clock',
             [
@@ -57,11 +61,11 @@ class MXDFMTZCGutenberg
                     ],
                     'lang'   => [
                         'type' => 'string',
-                        'default' => 'en-US'
+                        'default' => 'en'
                     ],
                     'lang_for_date'   => [
                         'type' => 'string',
-                        'default' => 'en-US'
+                        'default' => 'en'
                     ],
                     'show_days'   => [
                         'type' => 'string',
@@ -81,7 +85,7 @@ class MXDFMTZCGutenberg
                     ],
                     'arrows_color'   => [
                         'type' => 'string',
-                        'default' => 'unset'
+                        'default' => '#333333'
                     ],
                     'clock_type'   => [
                         'type' => 'string',
