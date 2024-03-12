@@ -74,7 +74,7 @@ if ( ! defined( 'MXMTZC_PLUGIN_ABS_PATH' ) ) {
 if ( ! defined( 'MXMTZC_PLUGIN_VERSION' ) ) {
 
 	// version
-	define( 'MXMTZC_PLUGIN_VERSION', '4.0' ); // Must be replaced before production on for example '1.0'
+	define( 'MXMTZC_PLUGIN_VERSION', time() ); // '4.0'
 
 }
 

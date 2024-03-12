@@ -25,6 +25,12 @@ class MXDFMTZCGutenberg
 
         $asset_file = include('build/mx-timezone-clock/index.asset.php');
 
+        // add canvasClock dependency
+        if(is_array($asset_file['dependencies'])) {
+
+            array_push($asset_file['dependencies'], 'mxmtzc_script_frontend');
+        }
+
         wp_register_script(
             'mx_server_side_rendering_script',
             MXMTZC_PLUGIN_URL . 'includes/gutenberg/build/mx-timezone-clock/index.js',
@@ -43,6 +49,10 @@ class MXDFMTZCGutenberg
                 'api_version'       => 2,
                 'category'          => 'widgets',
                 'attributes'        => [
+                    'clock_id'   => [
+                        'type' => 'string',
+                        'default' => ''
+                    ],
                     'time_zone'   => [
                         'type' => 'string',
                         'default' => 'Europe/London'
@@ -75,6 +85,10 @@ class MXDFMTZCGutenberg
                         'type' => 'number',
                         'default' => 14
                     ],
+                    'show_seconds'   => [
+                        'type' => 'string',
+                        'default' => 'true'
+                    ],
                     'arrow_type'   => [
                         'type' => 'string',
                         'default' => 'classical' // modern
@@ -98,6 +112,10 @@ class MXDFMTZCGutenberg
                     'mediaId'  => [
                         'type' => 'string',
                         'default' => NULL
+                    ],
+                    'text_align'  => [
+                        'type' => 'string',
+                        'default' => 'center'
                     ]
                 ],
                 'editor_script' => 'mx_server_side_rendering_script',
@@ -112,22 +130,7 @@ class MXDFMTZCGutenberg
 
         ob_start();
 
-        $data = [
-            'time_zone' => esc_attr($block_attributes['time_zone']),
-            'city_name' => html_entity_decode(esc_attr($block_attributes['city_name'])),
-            'time_format' => intval($block_attributes['time_format']),
-            'digital_clock' => esc_attr($block_attributes['digital_clock']),
-            'lang' => esc_attr($block_attributes['lang']),
-            'lang_for_date' => esc_attr($block_attributes['lang_for_date']),
-            'show_days' => esc_attr($block_attributes['show_days']),
-            'clock_font_size' => intval($block_attributes['clock_font_size']),
-            'arrow_type' => esc_attr($block_attributes['arrow_type']),
-            'super_simple' => esc_attr($block_attributes['super_simple']),
-            'arrows_color' => esc_attr($block_attributes['arrows_color']),
-            'clock_type' => esc_attr($block_attributes['clock_type']),
-            'clock_upload' => esc_attr($block_attributes['clock_upload']),
-            'mediaId' => esc_attr($block_attributes['mediaId'])
-        ];
+        $data = $block_attributes;
 
         mxmtzc_require_view_file_frontend('clock-render.php', $data);
 

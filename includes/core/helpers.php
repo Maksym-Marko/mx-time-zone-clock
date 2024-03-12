@@ -48,5 +48,5 @@ function mxmtzc_require_view_file_frontend($file, $data = NULL)
 
     $data = $data;
 
-    require_once MXMTZC_PLUGIN_ABS_PATH . 'includes/frontend/views/' . $file;
+    include MXMTZC_PLUGIN_ABS_PATH . 'includes/frontend/views/' . $file;
 }

@@ -3,11 +3,12 @@ import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from 
 import ServerSideRender from '@wordpress/server-side-render';
 import { Panel, PanelBody, PanelRow, SelectControl, TextControl, ColorPicker, Button } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import './editor.scss';
 import metadata from './block.json';
 import timezones from 'timezones-list';
 import ISO6391 from 'iso-639-1';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Edit({ attributes, setAttributes }) {
 
@@ -83,7 +84,26 @@ export default function Edit({ attributes, setAttributes }) {
 				clock_upload: imageData.media_details.sizes.full.source_url
 			})
 		}
-	}, [imageData])
+	}, [imageData]);
+
+	// generate id
+	useEffect(() => {
+		setAttributes({
+			clock_id: 'mx-'+uuidv4()
+		});
+	}, []);
+
+	useEffect(() => {
+		if(typeof mxmtzcRunClocks == 'object') {
+
+			setTimeout(() => {
+				mxmtzcRunClocks.initClockById('.'+attributes.clock_id);
+				console.log('attempt to init');
+	
+			}, 2000);
+			
+		}
+	}, [attributes]);
 
 	return [
 		<InspectorControls key="mx-settings">
@@ -214,6 +234,32 @@ export default function Edit({ attributes, setAttributes }) {
 							__nextHasNoMarginBottom
 							value={attributes.clock_font_size}
 							options={formattedFontSizes}
+						/>
+					</PanelRow>
+
+				</PanelBody>
+
+				<PanelBody title={__('Text Align', 'mxmtzc-domain')} initialOpen={false}>
+					
+					<PanelRow>
+						<SelectControl
+							onChange={(text_align) => setAttributes({ text_align })}
+							__nextHasNoMarginBottom
+							value={attributes.text_align}
+							options={[
+								{
+									label: 'Left',
+									value: 'left'
+								},
+								{
+									label: 'Center',
+									value: 'center'
+								},
+								{
+									label: 'Right',
+									value: 'right'
+								}
+							]}
 						/>
 					</PanelRow>
 
@@ -386,14 +432,6 @@ export default function Edit({ attributes, setAttributes }) {
 
 				</PanelBody>
 
-
-
-
-
-
-
-
-
 			</Panel>
 
 		</InspectorControls>,
@@ -404,7 +442,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<ServerSideRender
 				block={metadata.name}
 				attributes={attributes}
-			/>
+			></ServerSideRender>
 		</div>
 	];
 }

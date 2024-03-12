@@ -32,6 +32,17 @@ final class MXMTZCMXTimeZoneClocks
 
 	}
 
+	/**
+     * Include Global Features.
+     * 
+     * @return void
+     */
+    public function includeGlobalFeatures()
+    {
+
+        require_once MXMTZC_PLUGIN_ABS_PATH . 'includes/global/index.php';
+    }
+
 	/*
 	* Include Admin Path
 	*/
@@ -72,6 +83,9 @@ $final_class_instance = new MXMTZCMXTimeZoneClocks();
 
 // run core files
 $final_class_instance->mxmtzc_include();
+
+// include global part
+$final_class_instance->includeGlobalFeatures();
 
 // include admin part
 $final_class_instance->mxmtzc_include_admin_path();

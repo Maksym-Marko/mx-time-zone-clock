@@ -11,6 +11,10 @@
     "html": false
   },
   "attributes": {
+    "clock_id": {
+      "type": "string",
+      "default": ""
+    },
     "time_zone": {
       "type": "string",
       "default": "Europe/London"
@@ -70,6 +74,10 @@
     "mediaId": {
       "type": "string",
       "default": null
+    },
+    "text_align": {
+      "type": "string",
+      "default": "center"
     }
   },
   "textdomain": "mxmtzc-domain",
