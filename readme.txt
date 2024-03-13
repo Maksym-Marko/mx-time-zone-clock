@@ -3,11 +3,11 @@ Contributors: markomaksym
 Tags: clock on the website, clock, time zone, годинник
 Requires at least: 4.9
 Tested up to: 6.4
-Stable tag: 4.1
+Stable tag: 5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Clocks for different time zones for your website.
+Add timezone clocks to your website.
 
 == Description ==
 
@@ -55,8 +55,12 @@ Clocks for different time zones for your website.
 2. Insert Shortcode
 3. Result
 4. Upload your own dial
+5. "MX Timezone Clock" Gutenberg block
 
 == Changelog ==
+
+= 5.0 =
+Added "MX Timezone Clock" Gutenberg block. Now you can add clocks using Gutenberg editor.
 
 = 4.1 =
 Tested for WordPress 6.4. JS moved to head tag.

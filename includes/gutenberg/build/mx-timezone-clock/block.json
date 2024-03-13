@@ -13,7 +13,7 @@
   "attributes": {
     "clock_id": {
       "type": "string",
-      "default": ""
+      "default": "mx-time-zone-clock"
     },
     "time_zone": {
       "type": "string",
@@ -33,11 +33,11 @@
     },
     "lang": {
       "type": "string",
-      "default": "en"
+      "default": "en-US"
     },
     "lang_for_date": {
       "type": "string",
-      "default": "en"
+      "default": "en-US"
     },
     "show_days": {
       "type": "string",

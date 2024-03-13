@@ -32,7 +32,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var timezones_list__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(timezones_list__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! iso-639-1 */ "./node_modules/iso-639-1/src/index.js");
 /* harmony import */ var iso_639_1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(iso_639_1__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var _locales__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./locales */ "./includes/gutenberg/src/mx-timezone-clock/locales.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+
 
 
 
@@ -72,13 +74,24 @@ function Edit({
 
   // locales
   const formattedLocales = [];
-  const locales = iso_639_1__WEBPACK_IMPORTED_MODULE_10___default().getAllCodes();
-  locales.forEach(element => {
-    let obj = {
-      label: element,
-      value: element
-    };
-    formattedLocales.push(obj);
+  const _ISO6391 = iso_639_1__WEBPACK_IMPORTED_MODULE_10___default().getLanguages(iso_639_1__WEBPACK_IMPORTED_MODULE_10___default().getAllCodes());
+  let languages = _ISO6391.sort((a, b) => {
+    if (a.nativeName < b.nativeName) {
+      return -1;
+    }
+    if (a.nativeName > b.nativeName) {
+      return 1;
+    }
+    return 0;
+  });
+  languages.forEach(element => {
+    if (element.code !== 'ru' && element.code !== 'be') {
+      let obj = {
+        label: element.nativeName,
+        value: element.code
+      };
+      formattedLocales.push(obj);
+    }
   });
 
   // font sizes
@@ -118,14 +131,13 @@ function Edit({
   // generate id
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
     setAttributes({
-      clock_id: 'mx-' + (0,uuid__WEBPACK_IMPORTED_MODULE_11__["default"])()
+      clock_id: 'mx-' + (0,uuid__WEBPACK_IMPORTED_MODULE_12__["default"])()
     });
   }, []);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
     if (typeof mxmtzcRunClocks == 'object') {
       setTimeout(() => {
         mxmtzcRunClocks.initClockById('.' + attributes.clock_id);
-        console.log('attempt to init');
       }, 2000);
     }
   }, [attributes]);
@@ -184,27 +196,7 @@ function Edit({
       value: 'false'
     }]
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Clock Language', 'mxmtzc-domain'),
-    initialOpen: false
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    onChange: lang => setAttributes({
-      lang
-    }),
-    __nextHasNoMarginBottom: true,
-    value: attributes.lang,
-    options: formattedLocales
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date Language', 'mxmtzc-domain'),
-    initialOpen: false
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    onChange: lang_for_date => setAttributes({
-      lang_for_date
-    }),
-    __nextHasNoMarginBottom: true,
-    value: attributes.lang_for_date,
-    options: formattedLocales
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Dates', 'mxmtzc-domain'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Date', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
     onChange: show_days => setAttributes({
@@ -219,7 +211,17 @@ function Edit({
       label: 'No',
       value: 'false'
     }]
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  }))), attributes.show_days === 'true' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Date Language', 'mxmtzc-domain'),
+    initialOpen: false
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+    onChange: lang_for_date => setAttributes({
+      lang_for_date
+    }),
+    __nextHasNoMarginBottom: true,
+    value: attributes.lang_for_date,
+    options: formattedLocales
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("small", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* Not all the languages are supported by the clock.', 'mxmtzc-domain')))) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Clock Font Size', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
@@ -265,22 +267,6 @@ function Edit({
       value: 'false'
     }]
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Arrow Type', 'mxmtzc-domain'),
-    initialOpen: false
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    onChange: arrow_type => setAttributes({
-      arrow_type
-    }),
-    __nextHasNoMarginBottom: true,
-    value: attributes.arrow_type,
-    options: [{
-      label: 'Classical',
-      value: 'classical'
-    }, {
-      label: 'Modern',
-      value: 'modern'
-    }]
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Super Simple', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
@@ -296,7 +282,23 @@ function Edit({
       label: 'No',
       value: 'false'
     }]
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  }))), attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Arrow Type', 'mxmtzc-domain'),
+    initialOpen: false
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+    onChange: arrow_type => setAttributes({
+      arrow_type
+    }),
+    __nextHasNoMarginBottom: true,
+    value: attributes.arrow_type,
+    options: [{
+      label: 'Classical',
+      value: 'classical'
+    }, {
+      label: 'Modern',
+      value: 'modern'
+    }]
+  }))) : '', attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Arrows Color', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ColorPicker, {
@@ -304,7 +306,7 @@ function Edit({
       arrows_color
     }),
     defaultValue: attributes.arrows_color
-  }))), typeof mxdfmtzc_localizer === 'object' && mxdfmtzc_localizer.hasOwnProperty('image_folder') ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  }))) : '', typeof mxdfmtzc_localizer === 'object' && mxdfmtzc_localizer.hasOwnProperty('image_folder') && attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Clock Type', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -328,7 +330,7 @@ function Edit({
       },
       checked: image === attributes.clock_type
     })));
-  })))) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+  })))) : '', attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upload Clock', 'mxmtzc-domain'),
     initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -362,7 +364,7 @@ function Edit({
         mediaId: null
       });
     }
-  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "No image!"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "No image!"))))) : '')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: "mx-render",
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
@@ -402,6 +404,21 @@ __webpack_require__.r(__webpack_exports__);
    */
   save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
+
+/***/ }),
+
+/***/ "./includes/gutenberg/src/mx-timezone-clock/locales.js":
+/*!*************************************************************!*\
+  !*** ./includes/gutenberg/src/mx-timezone-clock/locales.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   locales: () => (/* binding */ locales)
+/* harmony export */ });
+const locales = ["az-AZ", "sr-SP", "uz-UZ", "az-AZ", "sr-SP", "uz-UZ", "aa", "ab", "ae", "af", "af-ZA", "ak", "am", "an", "ar", "ar-AE", "ar-BH", "ar-DZ", "ar-EG", "ar-IQ", "ar-JO", "ar-KW", "ar-LB", "ar-LY", "ar-MA", "ar-OM", "ar-QA", "ar-SA", "ar-SY", "ar-TN", "ar-YE", "as", "av", "ay", "az", "ba", "be", "be-BY", "bg", "bg-BG", "bh", "bi", "bm", "bn", "bo", "br", "bs", "ca", "ca-ES", "ce", "ch", "co", "cr", "cs", "cs-CZ", "cu", "cv", "cy", "da", "da-DK", "de", "de-AT", "de-CH", "de-DE", "de-LI", "de-LU", "div-MV", "dv", "dz", "ee", "el", "el-GR", "en", "en-AU", "en-BZ", "en-CA", "en-CB", "en-GB", "en-IE", "en-JM", "en-NZ", "en-PH", "en-TT", "en-US", "en-ZA", "en-ZW", "eo", "es", "es-AR", "es-BO", "es-CL", "es-CO", "es-CR", "es-DO", "es-EC", "es-ES", "es-GT", "es-HN", "es-MX", "es-NI", "es-PA", "es-PE", "es-PR", "es-PY", "es-SV", "es-UY", "es-VE", "et", "et-EE", "eu", "eu-ES", "fa", "fa-IR", "ff", "fi", "fi-FI", "fj", "fo", "fo-FO", "fr", "fr-BE", "fr-CA", "fr-CH", "fr-FR", "fr-LU", "fr-MC", "fy", "ga", "gd", "gl", "gl-ES", "gn", "gu", "gu-IN", "gv", "ha", "he", "he-IL", "hi", "hi-IN", "ho", "hr", "hr-HR", "ht", "hu", "hu-HU", "hy", "hy-AM", "hz", "ia", "id", "id-ID", "ie", "ig", "ii", "ik", "io", "is", "is-IS", "it", "it-CH", "it-IT", "iu", "ja", "ja-JP", "jv", "ka", "ka-GE", "kg", "ki", "kj", "kk", "kk-KZ", "kl", "km", "kn", "kn-IN", "ko", "ko-KR", "kr", "ks", "ku", "kv", "kw", "ky", "ky-KZ", "la", "lb", "lg", "li", "ln", "lo", "lt", "LT", "lu", "lv", "lv-LV", "mg", "mh", "mi", "mk", "mk-MK", "ml", "mn", "mn-MN", "mr", "mr-IN", "ms", "ms-BN", "ms-MY", "mt", "my", "na", "nb", "nb-NO", "nd", "ne", "ng", "nl", "nl-BE", "nl-NL", "nn", "nn-NO", "no", "nr", "nv", "ny", "oc", "oj", "om", "or", "os", "pa", "pa-IN", "pi", "pl", "pl-PL", "ps", "pt", "pt-BR", "pt-PT", "qu", "rm", "rn", "ro", "ro-RO", "rw", "sa", "sa-IN", "sc", "sd", "se", "sg", "si", "sk", "sk-SK", "sl", "sl-SI", "sm", "sn", "so", "sq", "sq-AL", "sr", "ss", "st", "su", "sv", "sv-FI", "sv-SE", "sw", "sw-KE", "ta", "ta-IN", "te", "te-IN", "tg", "th", "th-TH", "ti", "tk", "tl", "tn", "to", "tr", "tr-TR", "ts", "tt", "tt-RU", "tw", "ty", "ug", "uk", "uk-UA", "ur", "ur-PK", "uz", "ve", "vi", "vi-VN", "vo", "wa", "wo", "xh", "yi", "yo", "za", "zh", "zh-CHS", "zh-CHT", "zh-CN", "zh-HK", "zh-MO", "zh-SG", "zh-TW", "zu"];
 
 /***/ }),
 
@@ -1558,7 +1575,7 @@ module.exports = class ISO6391 {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"mxdfmtzc/mx-timezone-clock","version":"0.1.3","title":"MX Timezone Clock","category":"widgets","icon":"clock","description":"Add MX Timezone Clock","supports":{"html":false},"attributes":{"clock_id":{"type":"string","default":""},"time_zone":{"type":"string","default":"Europe/London"},"city_name":{"type":"string","default":"London"},"time_format":{"type":"number","default":24},"digital_clock":{"type":"string","default":"false"},"lang":{"type":"string","default":"en"},"lang_for_date":{"type":"string","default":"en"},"show_days":{"type":"string","default":"false"},"clock_font_size":{"type":"number","default":14},"show_seconds":{"type":"string","default":"true"},"arrow_type":{"type":"string","default":"classical"},"super_simple":{"type":"string","default":"false"},"arrows_color":{"type":"string","default":"#333333"},"clock_type":{"type":"string","default":"clock-face2.png"},"clock_upload":{"type":"string","default":"false"},"mediaId":{"type":"string","default":null},"text_align":{"type":"string","default":"center"}},"textdomain":"mxmtzc-domain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"mxdfmtzc/mx-timezone-clock","version":"0.1.3","title":"MX Timezone Clock","category":"widgets","icon":"clock","description":"Add MX Timezone Clock","supports":{"html":false},"attributes":{"clock_id":{"type":"string","default":"mx-time-zone-clock"},"time_zone":{"type":"string","default":"Europe/London"},"city_name":{"type":"string","default":"London"},"time_format":{"type":"number","default":24},"digital_clock":{"type":"string","default":"false"},"lang":{"type":"string","default":"en-US"},"lang_for_date":{"type":"string","default":"en-US"},"show_days":{"type":"string","default":"false"},"clock_font_size":{"type":"number","default":14},"show_seconds":{"type":"string","default":"true"},"arrow_type":{"type":"string","default":"classical"},"super_simple":{"type":"string","default":"false"},"arrows_color":{"type":"string","default":"#333333"},"clock_type":{"type":"string","default":"clock-face2.png"},"clock_upload":{"type":"string","default":"false"},"mediaId":{"type":"string","default":null},"text_align":{"type":"string","default":"center"}},"textdomain":"mxmtzc-domain","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ }),
 

@@ -1,7 +1,10 @@
 (function ($) {
     $(function () {
 
-		mxmtzcRunClocks.init();
+		if(typeof mxmtzcRunClocks == 'object') {
+
+			mxmtzcRunClocks.init();
+		}
 
 	});
 })(jQuery);

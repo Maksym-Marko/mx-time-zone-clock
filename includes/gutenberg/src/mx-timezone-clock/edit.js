@@ -8,6 +8,7 @@ import './editor.scss';
 import metadata from './block.json';
 import timezones from 'timezones-list';
 import ISO6391 from 'iso-639-1';
+import { locales } from './locales'
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Edit({ attributes, setAttributes }) {
@@ -38,14 +39,27 @@ export default function Edit({ attributes, setAttributes }) {
 	// locales
 	const formattedLocales = [];
 
-	const locales = ISO6391.getAllCodes();
+	const _ISO6391 = ISO6391.getLanguages(ISO6391.getAllCodes());
+
+	let languages = _ISO6391.sort((a, b) => {
+		if ( a.nativeName < b.nativeName ){
+			return -1;
+		  }
+		  if ( a.nativeName > b.nativeName ){
+			return 1;
+		  }
+		  return 0;
+	});
 	
-	locales.forEach(element => {
-		let obj = {
-			label: element,
-			value: element
-		}
-		formattedLocales.push(obj);
+	languages.forEach(element => {
+
+		if(element.code !== 'ru' && element.code !== 'be') {
+			let obj = {
+				label: element.nativeName,
+				value: element.code
+			}
+			formattedLocales.push(obj);
+		}		
 	});
 
 	// font sizes
@@ -97,9 +111,7 @@ export default function Edit({ attributes, setAttributes }) {
 		if(typeof mxmtzcRunClocks == 'object') {
 
 			setTimeout(() => {
-				mxmtzcRunClocks.initClockById('.'+attributes.clock_id);
-				console.log('attempt to init');
-	
+				mxmtzcRunClocks.initClockById('.'+attributes.clock_id);	
 			}, 2000);
 			
 		}
@@ -178,33 +190,7 @@ export default function Edit({ attributes, setAttributes }) {
 
 				</PanelBody>
 
-				<PanelBody title={__('Clock Language', 'mxmtzc-domain')} initialOpen={false}>
-					
-					<PanelRow>
-						<SelectControl
-							onChange={(lang) => setAttributes({ lang })}
-							__nextHasNoMarginBottom
-							value={attributes.lang}
-							options={formattedLocales}
-						/>
-					</PanelRow>
-
-				</PanelBody>
-
-				<PanelBody title={__('Date Language', 'mxmtzc-domain')} initialOpen={false}>
-					
-					<PanelRow>
-						<SelectControl
-							onChange={(lang_for_date) => setAttributes({ lang_for_date })}
-							__nextHasNoMarginBottom
-							value={attributes.lang_for_date}
-							options={formattedLocales}
-						/>
-					</PanelRow>
-
-				</PanelBody>
-
-				<PanelBody title={__('Show Dates', 'mxmtzc-domain')} initialOpen={false}>
+				<PanelBody title={__('Show Date', 'mxmtzc-domain')} initialOpen={false}>
 					
 					<PanelRow>
 						<SelectControl
@@ -225,6 +211,23 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 
 				</PanelBody>
+
+				{ attributes.show_days === 'true' ? <PanelBody title={__('Date Language', 'mxmtzc-domain')} initialOpen={false}>
+					
+					<PanelRow>
+						<SelectControl
+							onChange={(lang_for_date) => setAttributes({ lang_for_date })}
+							__nextHasNoMarginBottom
+							value={attributes.lang_for_date}
+							options={formattedLocales}
+						/>
+					</PanelRow>
+
+					<PanelRow>
+						<small>{__('* Not all the languages are supported by the clock.', 'mxmtzc-domain')}</small>
+					</PanelRow>				
+
+				</PanelBody> : '' }				
 
 				<PanelBody title={__('Clock Font Size', 'mxmtzc-domain')} initialOpen={false}>
 					
@@ -287,28 +290,6 @@ export default function Edit({ attributes, setAttributes }) {
 
 				</PanelBody>
 
-				<PanelBody title={__('Arrow Type', 'mxmtzc-domain')} initialOpen={false}>
-					
-					<PanelRow>
-						<SelectControl
-							onChange={(arrow_type) => setAttributes({ arrow_type })}
-							__nextHasNoMarginBottom
-							value={attributes.arrow_type}
-							options={[
-								{
-									label: 'Classical',
-									value: 'classical'
-								},
-								{
-									label: 'Modern',
-									value: 'modern'
-								}
-							]}
-						/>
-					</PanelRow>
-
-				</PanelBody>
-
 				<PanelBody title={__('Super Simple', 'mxmtzc-domain')} initialOpen={false}>
 					
 					<PanelRow>
@@ -331,7 +312,29 @@ export default function Edit({ attributes, setAttributes }) {
 
 				</PanelBody>
 
-				<PanelBody title={__('Arrows Color', 'mxmtzc-domain')} initialOpen={false}>
+				{ attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? <PanelBody title={__('Arrow Type', 'mxmtzc-domain')} initialOpen={false}>
+					
+					<PanelRow>
+						<SelectControl
+							onChange={(arrow_type) => setAttributes({ arrow_type })}
+							__nextHasNoMarginBottom
+							value={attributes.arrow_type}
+							options={[
+								{
+									label: 'Classical',
+									value: 'classical'
+								},
+								{
+									label: 'Modern',
+									value: 'modern'
+								}
+							]}
+						/>
+					</PanelRow>
+
+				</PanelBody> : '' }
+
+				{ attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? <PanelBody title={__('Arrows Color', 'mxmtzc-domain')} initialOpen={false}>
 					
 					<PanelRow>
 						
@@ -342,9 +345,9 @@ export default function Edit({ attributes, setAttributes }) {
 
 					</PanelRow>
 
-				</PanelBody>
+				</PanelBody> : '' }
 
-				{typeof mxdfmtzc_localizer === 'object' && mxdfmtzc_localizer.hasOwnProperty('image_folder') ? (
+				{typeof mxdfmtzc_localizer === 'object' && mxdfmtzc_localizer.hasOwnProperty('image_folder') && attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? (
 					<PanelBody title={__('Clock Type', 'mxmtzc-domain')} initialOpen={false}>
 						
 						<PanelRow>
@@ -369,8 +372,6 @@ export default function Edit({ attributes, setAttributes }) {
 									</div>)
 								})}
 							</div>
-							
-							
 
 						</PanelRow>
 
@@ -378,59 +379,61 @@ export default function Edit({ attributes, setAttributes }) {
 					
 				) : ''}
 
-				<PanelBody title={__('Upload Clock', 'mxmtzc-domain')} initialOpen={false}>
+				{
+					attributes.super_simple === 'false' && attributes.digital_clock == 'false' ? <PanelBody title={__('Upload Clock', 'mxmtzc-domain')} initialOpen={false}>
 					
-					<PanelRow>
+						<PanelRow>
 
-						<div className="mx-timezone-clocks-upload-image">
+							<div className="mx-timezone-clocks-upload-image">
 
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={(media) => setAttributes({
-										mediaId: media.id
-									})}
-									allowedTypes={ALLOWED_MEDIA_TYPES}
-									value={attributes.mediaId}
-									render={({ open }) => (
-										<Button
-											icon="upload"
-											text={attributes.mediaId ? 'Change Image' : 'Upload Image'}
-											variant="secondary"
-											onClick={open}
-										/>
-									)}
-								/>
-							</MediaUploadCheck>
+								<MediaUploadCheck>
+									<MediaUpload
+										onSelect={(media) => setAttributes({
+											mediaId: media.id
+										})}
+										allowedTypes={ALLOWED_MEDIA_TYPES}
+										value={attributes.mediaId}
+										render={({ open }) => (
+											<Button
+												icon="upload"
+												text={attributes.mediaId ? 'Change Image' : 'Upload Image'}
+												variant="secondary"
+												onClick={open}
+											/>
+										)}
+									/>
+								</MediaUploadCheck>
 
-							<div>
-								{attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (
+								<div>
+									{attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (
 
-									<div className="mx-timezone-clocks-uploaded-image">
+										<div className="mx-timezone-clocks-uploaded-image">
 
-										<img src={attributes.clock_upload} id={attributes.mediaId} />
+											<img src={attributes.clock_upload} id={attributes.mediaId} />
 
-										<Button
-											icon="remove"
-											variant="secondary"
-											isDestructive="true"
-											onClick={() => {
-												setAttributes({
-													clock_upload: 'false',
-													mediaId: null
-												})
-											}}
-										/>
-										
-									</div>
+											<Button
+												icon="remove"
+												variant="secondary"
+												isDestructive="true"
+												onClick={() => {
+													setAttributes({
+														clock_upload: 'false',
+														mediaId: null
+													})
+												}}
+											/>
+											
+										</div>
 
-								) : (<h3>No image!</h3>)}	
+									) : (<h3>No image!</h3>)}	
+								</div>
+
 							</div>
+							
+						</PanelRow>
 
-						</div>
-						
-					</PanelRow>
-
-				</PanelBody>
+					</PanelBody> : ''
+				}
 
 			</Panel>
 

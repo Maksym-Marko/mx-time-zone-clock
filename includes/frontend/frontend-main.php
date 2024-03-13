@@ -7,14 +7,6 @@ class MXMTZC_FrontEnd_Main
 {
 
 	/*
-	* MXMTZC_FrontEnd_Main constructor
-	*/
-	public function __construct()
-	{
-
-	}
-
-	/*
 	* Additional classes
 	*/
 	public function mxmtzc_additional_classes()

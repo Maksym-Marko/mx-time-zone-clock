@@ -26,7 +26,7 @@ class MXDFMTZCGutenberg
         $asset_file = include('build/mx-timezone-clock/index.asset.php');
 
         // add canvasClock dependency
-        if(is_array($asset_file['dependencies'])) {
+        if (is_array($asset_file['dependencies'])) {
 
             array_push($asset_file['dependencies'], 'mxmtzc_script_frontend');
         }
@@ -51,7 +51,7 @@ class MXDFMTZCGutenberg
                 'attributes'        => [
                     'clock_id'   => [
                         'type' => 'string',
-                        'default' => ''
+                        'default' => 'mx-time-zone-clock'
                     ],
                     'time_zone'   => [
                         'type' => 'string',
@@ -71,11 +71,11 @@ class MXDFMTZCGutenberg
                     ],
                     'lang'   => [
                         'type' => 'string',
-                        'default' => 'en'
+                        'default' => 'en-US'
                     ],
                     'lang_for_date'   => [
                         'type' => 'string',
-                        'default' => 'en'
+                        'default' => 'en-US'
                     ],
                     'show_days'   => [
                         'type' => 'string',

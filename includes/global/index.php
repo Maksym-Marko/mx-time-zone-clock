@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) exit;
          * */
         wp_register_script(
             'mxmtzc_script_frontend', 
-            MXMTZC_PLUGIN_URL . 'assets/jquery.canvasClock.js',
+            MXMTZC_PLUGIN_URL . 'assets/build/index.js',
             ['jquery'],
             MXMTZC_PLUGIN_VERSION,
             false

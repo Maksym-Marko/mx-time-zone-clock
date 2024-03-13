@@ -71,28 +71,28 @@ class MXMTZC_Admin_Main
 	{
 
 		// main menu item 
-		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'index', '', [
-			'page_title' 	=> 'MX Time Zone Clocks Settings',
-			'menu_title' 	=> 'Time Zone Clocks',
-			'dashicons' 	=> 'dashicons-clock'
-		]);
+		// MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'index', '', [
+		// 	'page_title' 	=> 'MX Time Zone Clocks Settings',
+		// 	'menu_title' 	=> 'Time Zone Clocks',
+		// 	'dashicons' 	=> 'dashicons-clock'
+		// ]);
 
 		// additional plugins
 		// hide menu item
-		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'hidemenu', 'NULL', [
-			'page_title' => 'Additional plugins',
-		], 'mx_clocks_additional_plugins');
+		// MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'hidemenu', 'NULL', [
+		// 	'page_title' => 'Additional plugins',
+		// ], 'mx_clocks_additional_plugins');
 
 		// offer
 		// hide menu item
-		MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'offer', 'NULL', [
-			'page_title' => 'Do you need a Web Developer?',
-		], 'mx_clocks_offer');
+		// MXMTZC_Route::mxmtzc_get('MXMTZC_Main_Page_Controller', 'offer', 'NULL', [
+		// 	'page_title' => 'Do you need a Web Developer?',
+		// ], 'mx_clocks_offer');
 
 		// sub settings menu item
         MXMTZC_Route::mxmtzc_get( 'MXMTZC_Main_Page_Controller', 'index', '', [
-            'menu_title' => 'Generate Short code',
-            'page_title' => 'Title of settings page'
+            'menu_title' => 'Time Zone Clocks',
+            'page_title' => 'Time Zone Clocks'
         ], MXMTZC_MAIN_MENU_SLUG, true );
 
 	}
