@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /*
 * Define MXMTZC_PLUGIN_PATH
 *
-* E:\OpenServer\domains\my-domain.com\wp-content\plugins\mx-time-zone-clocks\mx-time-zone-clocks.php
+* \\my-domain.com\wp-content\plugins\mx-time-zone-clocks\mx-time-zone-clocks.php
 */
 if ( ! defined( 'MXMTZC_PLUGIN_PATH' ) ) {
 
@@ -60,7 +60,7 @@ if ( ! defined( 'MXMTZC_TABLE_SLUG' ) ) {
 /*
 * Define MXMTZC_PLUGIN_ABS_PATH
 * 
-* E:\OpenServer\domains\my-domain.com\wp-content\plugins\mx-time-zone-clocks/
+* \\my-domain.com\wp-content\plugins\mx-time-zone-clocks/
 */
 if ( ! defined( 'MXMTZC_PLUGIN_ABS_PATH' ) ) {
 

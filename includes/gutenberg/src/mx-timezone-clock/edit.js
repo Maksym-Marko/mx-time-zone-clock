@@ -94,8 +94,22 @@ export default function Edit({ attributes, setAttributes }) {
 
 	useEffect(() => {
 		if (imageData?.media_details) {
+
+			let image_url = 'false'
+
+			if( imageData?.media_details?.sizes?.full?.source_url ) {
+
+				image_url = imageData.media_details.sizes.full.source_url;
+			} else {
+
+				if(imageData?.source_url) {
+
+					image_url = imageData.source_url
+				}
+			}
+
 			setAttributes({
-				clock_upload: imageData.media_details.sizes.full.source_url
+				clock_upload: image_url
 			})
 		}
 	}, [imageData]);
@@ -363,7 +377,11 @@ export default function Edit({ attributes, setAttributes }) {
 												id={'mx-timezone-clocks-type'+index}
 												value={image}
 												onChange={e => {
-													setAttributes({ clock_type: e.currentTarget.value })
+													setAttributes({ 
+														clock_type: e.currentTarget.value,
+														clock_upload: 'false',
+														mediaId: null
+													})
 												}}
 												checked={image===attributes.clock_type}
 											/>
@@ -405,7 +423,7 @@ export default function Edit({ attributes, setAttributes }) {
 								</MediaUploadCheck>
 
 								<div>
-									{attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (
+									{attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (
 
 										<div className="mx-timezone-clocks-uploaded-image">
 
@@ -425,7 +443,11 @@ export default function Edit({ attributes, setAttributes }) {
 											
 										</div>
 
-									) : (<h3>No image!</h3>)}	
+									) : (
+									<>
+										<h3>No image!</h3>
+										<small>{__('* The best size is 120x120px. The best format is .png', 'mxmtzc-domain')}</small>
+									</>)}	
 								</div>
 
 							</div>

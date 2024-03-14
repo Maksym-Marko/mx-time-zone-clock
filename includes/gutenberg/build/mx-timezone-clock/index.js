@@ -122,8 +122,16 @@ function Edit({
   }, [attributes]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
     if (imageData?.media_details) {
+      let image_url = 'false';
+      if (imageData?.media_details?.sizes?.full?.source_url) {
+        image_url = imageData.media_details.sizes.full.source_url;
+      } else {
+        if (imageData?.source_url) {
+          image_url = imageData.source_url;
+        }
+      }
       setAttributes({
-        clock_upload: imageData.media_details.sizes.full.source_url
+        clock_upload: image_url
       });
     }
   }, [imageData]);
@@ -325,7 +333,9 @@ function Edit({
       value: image,
       onChange: e => {
         setAttributes({
-          clock_type: e.currentTarget.value
+          clock_type: e.currentTarget.value,
+          clock_upload: 'false',
+          mediaId: null
         });
       },
       checked: image === attributes.clock_type
@@ -349,7 +359,7 @@ function Edit({
       variant: "secondary",
       onClick: open
     })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, attributes.mediaId && attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, attributes?.clock_upload && attributes?.clock_upload !== 'false' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mx-timezone-clocks-uploaded-image"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: attributes.clock_upload,
@@ -364,7 +374,7 @@ function Edit({
         mediaId: null
       });
     }
-  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "No image!"))))) : '')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  })) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "No image!"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("small", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('* The best size is 120x120px. The best format is .png', 'mxmtzc-domain'))))))) : '')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: "mx-render",
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {

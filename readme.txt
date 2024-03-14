@@ -7,20 +7,12 @@ Stable tag: 5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add timezone clocks to your website.
+Add time zone clocks to your website.
 
 == Description ==
 
 <p>
-	Clocks with different time zones for your website.
-</p>
-
-<p>
-	Here you can find examples: <a href="https://markomaksym.com.ua/mx-time-zone-clocks/" target="_blank">https://markomaksym.com.ua/mx-time-zone-clocks/</a> 
-</p>
-
-<p>
-	You can place several different clocks with different time zones to your website.
+	<strong>MX Time Zone Clocks</strong> – the ultimate solution for displaying multiple time zone clocks on your WordPress website effortlessly! With our plugin, you can now provide your users with the convenience of viewing time zone differences instantly, making scheduling and collaboration across different regions a breeze.
 </p>
 
 <p>
