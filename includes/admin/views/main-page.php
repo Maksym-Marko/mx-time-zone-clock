@@ -2,6 +2,7 @@
 
 	<?php mxmtzc_include_view( 'components/hire-developer' ); ?>
 	<?php mxmtzc_include_view( 'components/olena-theme' ); ?>
+	<?php mxmtzc_include_view( 'components/how-does-it-works' ); ?>
 
 	<!-- <nav class="mxmlb_admin_nav_bar">
 		

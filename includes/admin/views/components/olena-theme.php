@@ -1,6 +1,9 @@
-<!--  -->
-<?php 
-    $message = esc_html__('If you are looking for a brand new animated WordPress theme, please check Olena Theme. Here is a short viedo:', 'mxmtzc-domain');
+<?php
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) exit;
+
+    $message = esc_html__('If you are looking for a brand new animated WordPress theme, please check Olena Theme. Here is a short video:', 'mxmtzc-domain');
     $button_url = esc_url('https://olena-theme.com.ua/');
     $button_text = 'Download Olena Theme';
 ?>

@@ -3,7 +3,7 @@ Contributors: markomaksym
 Tags: clock on the website, clock, time zone, годинник
 Requires at least: 4.9
 Tested up to: 6.4
-Stable tag: 5.0
+Stable tag: 5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ Add time zone clocks to your website.
 	<b>How does it work?</b>
 </p>
 
-<iframe width="600" height="320" src="https://www.youtube.com/embed/Vd7LXbGjvlY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="600" height="320" src="https://www.youtube.com/embed/HoHkyK8kAdk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p>
 	<sub>
@@ -50,6 +50,9 @@ Add time zone clocks to your website.
 5. "MX Timezone Clock" Gutenberg block
 
 == Changelog ==
+
+= 5.1 =
+"How does it work" video added.
 
 = 5.0 =
 Added "MX Timezone Clock" Gutenberg block. Now you can add clocks using Gutenberg editor.

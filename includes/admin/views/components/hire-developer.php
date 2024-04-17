@@ -1,3 +1,8 @@
+<?php
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) exit; ?>
+
 <!--  -->
 <div class="mxmtzc-page-breadcrumb mxmtzc-bg-white">
     <div class="mxmtzc-row mxmtzc-align-items-center">
