@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) exit;
         /**
          *  Register canvasClock.
          * */
-        wp_register_script(
+        wp_enqueue_script(
             'mxmtzc_script_frontend', 
             MXMTZC_PLUGIN_URL . 'assets/build/index.js',
             ['jquery'],
@@ -28,6 +28,10 @@ if (!defined('ABSPATH')) exit;
             false
         );
 
+        // Add image folder.
+        wp_localize_script('mxmtzc_script_frontend', 'mxdfmtzc_localizer', [
+            'image_folder' => MXMTZC_PLUGIN_URL . 'includes/admin/assets/img/'
+        ]);
     }
 }
 add_action('wp_enqueue_scripts', 'mxmtzc_register_scripts');

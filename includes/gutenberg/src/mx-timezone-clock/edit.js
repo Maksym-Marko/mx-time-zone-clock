@@ -122,12 +122,13 @@ export default function Edit({ attributes, setAttributes }) {
 	}, []);
 
 	useEffect(() => {
+
 		if(typeof mxmtzcRunClocks == 'object') {
 
 			setTimeout(() => {
-				mxmtzcRunClocks.initClockById('.'+attributes.clock_id);	
+
+				mxmtzcRunClocks.initClockById('.'+attributes.clock_id);
 			}, 2000);
-			
 		}
 	}, [attributes]);
 

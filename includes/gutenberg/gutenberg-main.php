@@ -39,10 +39,6 @@ class MXDFMTZCGutenberg
             true
         );
 
-        wp_localize_script('mx_server_side_rendering_script', 'mxdfmtzc_localizer', [
-            'image_folder' => MXMTZC_PLUGIN_URL . 'includes/admin/assets/img/'
-        ]);
-
         register_block_type(
             __DIR__ . '/build/mx-timezone-clock',
             [

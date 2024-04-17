@@ -1,1 +1,0 @@
-{"version":3,"file":"mx-timezone-clock/style-index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://mxdfmtzc-npm-handler/./includes/gutenberg/src/mx-timezone-clock/style.scss"],"sourcesContent":[".mx-simple-elem-time {\n\tpadding: 0px 5px;\n}"],"names":[],"sourceRoot":""}

@@ -2,8 +2,8 @@
 Contributors: markomaksym
 Tags: clock on the website, clock, time zone, годинник
 Requires at least: 4.9
-Tested up to: 6.4
-Stable tag: 5.1
+Tested up to: 6.5
+Stable tag: 5.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,9 @@ Add time zone clocks to your website.
 5. "MX Timezone Clock" Gutenberg block
 
 == Changelog ==
+
+= 5.1.1 =
+Fixed enqueue script issue. Tested for WordPress 6.5.
 
 = 5.1 =
 "How does it work" video added.
